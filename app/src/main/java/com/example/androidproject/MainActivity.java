@@ -8,9 +8,14 @@ public class MainActivity extends AppCompatActivity {
 
     private int testingInt = 6;
 
+    private String testString = "Testing";
+    private String anotherTestString = "Testing again";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        testingInt = 4;
     }
 }
