@@ -37,6 +37,14 @@ public class MainActivity extends AppCompatActivity {
      */
     public void btnClick(View v) {
 
+        // Upper buttons
+        if (v == findViewById(R.id.btnActivityScreen)) {
+            // TODO: Add moving to ActivityScreenActivity
+        }
+        if (v == findViewById(R.id.btnStatistics)) {
+            // TODO: Add moving to StatisticsActivity
+        }
+
         // Alcohol buttons
         if (v == findViewById(R.id.btnAddAlcohol)) {
             // TODO: Add moving to AlcoholAddActivity
