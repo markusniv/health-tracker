@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
     public static final String EXTRA = "com.example.androidproject.EXTRA";
@@ -28,5 +29,28 @@ public class MainActivity extends AppCompatActivity {
             startActivity(getGender);
         }
 
+    }
+
+    /***
+     * Handles all the button clicks in MainActivity
+     * @param v The id of the button being clicked
+     */
+    public void btnClick(View v) {
+
+        // Alcohol buttons
+        if (v == findViewById(R.id.btnAddAlcohol)) {
+            // TODO: Add moving to AlcoholAddActivity
+        }
+        if (v == findViewById(R.id.btnDrivingAbility)) {
+            // TODO: Add moving to DrivingAbilityActivity
+        }
+
+        // Tobacco buttons
+        if (v == findViewById(R.id.btnAddTobacco)) {
+            // TODO: Add moving to TobaccoAddActivity
+        }
+        if (v == findViewById(R.id.btnTobaccoCounter)) {
+            // TODO: Add moving to TobaccoCounterActivity
+        }
     }
 }
