@@ -8,4 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="dark_grey">#474747</color>
+    <color name="burlywood">#D4AA7D</color>
+    <color name="eerie_black">#272727</color>
+    <color name="deep_champagne">#EFD09E</color>
 </resources>
