@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /***
+    /**
      * Handles all the button clicks in MainActivity
      * @param v The id of the button being clicked
      */
