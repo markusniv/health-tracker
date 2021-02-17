@@ -7,4 +7,8 @@ public class AddTobacco extends AddVice {
     public AddTobacco(TobaccoProduct tobaccoProduct) {
         this.tobaccoProduct = tobaccoProduct;
     }
+
+    public TobaccoProduct getTobaccoProduct() {
+        return tobaccoProduct;
+    }
 }

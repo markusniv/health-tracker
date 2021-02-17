@@ -14,7 +14,6 @@ import android.view.View;
  */
 
 public class GenderChooseActivity extends AppCompatActivity {
-    public static final String EXTRA = "com.example.androidproject.EXTRA";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
