@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AndroidProject</string>
+    <string name="tobacco_price">Syötä hinta</string>
 </resources>

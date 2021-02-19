@@ -56,7 +56,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Tobacco buttons
         if (v == findViewById(R.id.btnAddTobacco)) {
-            // TODO: Add moving to TobaccoAddActivity
+            Intent addTobacco = new Intent(MainActivity.this, AddTobaccoActivity.class);
+            startActivity(addTobacco);
         }
         if (v == findViewById(R.id.btnTobaccoCounter)) {
             // TODO: Add moving to TobaccoCounterActivity

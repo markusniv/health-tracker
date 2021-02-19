@@ -6,10 +6,9 @@ public class TobaccoProduct extends Vice {
     private double nicotineAmount;
     private double price;
 
-    public TobaccoProduct(String name, double nicotineAmount, double price) {
+    public TobaccoProduct(String name, double nicotineAmount) {
         this.name = name;
         this.nicotineAmount = nicotineAmount;
-        this.price = price;
     }
 
     public String getName() {
