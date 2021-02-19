@@ -4,12 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+
+import java.text.DecimalFormat;
 
 /**
  * Activity in which the user chooses a tobacco they've smoked and enters its price. From this data,
@@ -18,6 +23,10 @@ import android.widget.ListView;
 public class AddTobaccoActivity extends AppCompatActivity {
 
     private Tobacco tobacco;
+    private int regularPack = 20;
+    private int maxiPack = 24;
+    private DecimalFormat df = new DecimalFormat("0.00");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +50,26 @@ public class AddTobaccoActivity extends AppCompatActivity {
 
     public void onClick(View v) {
         EditText tobaccoPriceField = findViewById(R.id.editTobaccoPrice);
-        double tobaccoPrice = Double.parseDouble(tobaccoPriceField.getText().toString());
+        String tobaccoPriceString = tobaccoPriceField.getText().toString();
+        RadioGroup tobaccoPackRadioGroup = findViewById(R.id.radioTobaccoType);
+        RadioButton chosenTobaccoPack = findViewById(tobaccoPackRadioGroup.getCheckedRadioButtonId());
+
+        int tobaccoPackAmount;
+        if (chosenTobaccoPack == findViewById(R.id.radioRegularPack)) {
+            tobaccoPackAmount = regularPack;
+        } else {
+            tobaccoPackAmount = maxiPack;
+        }
+
+        double tobaccoPrice;
+        if (!tobaccoPriceString.equals("")) {
+            tobaccoPrice = Double.parseDouble(tobaccoPriceField.getText().toString()) / tobaccoPackAmount;
+        } else {
+            tobaccoPrice = 10.0 / tobaccoPackAmount;
+        }
+
+        tobaccoPrice = Double.parseDouble(df.format(tobaccoPrice));
+
         AddTobacco addTobaccoEvent = new AddTobacco(tobacco, tobaccoPrice);
         EventSingleton.getEventInstance().AddViceEvent(addTobaccoEvent);
 
