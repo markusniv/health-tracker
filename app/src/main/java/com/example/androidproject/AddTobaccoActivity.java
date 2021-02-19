@@ -24,7 +24,7 @@ public class AddTobaccoActivity extends AppCompatActivity {
 
     private Tobacco tobacco;
     private int regularPack = 20;
-    private int maxiPack = 24;
+    private int maxiPack = 27;
     private DecimalFormat df = new DecimalFormat("0.00");
 
     @Override

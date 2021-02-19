@@ -80,7 +80,7 @@
             android:id="@+id/radioMaxiPack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="24kpl aski" />
+            android:text="27kpl aski" />
     </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
