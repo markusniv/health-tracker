@@ -14,6 +14,11 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A singleton that creates and stores all the different Tobacco-objects the user can add into the
+ * AddTobacco-event. The tobacco types are stored in res/raw/tobaccoharmfulsubstance.csv and are converted
+ * into objects in the constructor line by line.
+ */
 public class TobaccoListSingleton {
     private static final TobaccoListSingleton tobaccoListInstance = new TobaccoListSingleton();
     private ArrayList<Tobacco> tobaccoList;

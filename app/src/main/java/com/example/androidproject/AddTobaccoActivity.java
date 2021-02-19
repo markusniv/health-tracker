@@ -11,6 +11,10 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
+/**
+ * Activity in which the user chooses a tobacco they've smoked and enters its price. From this data,
+ * a AddTobacco-object is created, which is then added into the EventSingleton viceEventList.
+ */
 public class AddTobaccoActivity extends AppCompatActivity {
 
     private Tobacco tobacco;
