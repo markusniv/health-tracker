@@ -3,11 +3,17 @@ package com.example.androidproject;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+
+import static android.content.DialogInterface.BUTTON1;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -61,6 +67,31 @@ public class MainActivity extends AppCompatActivity {
         }
         if (v == findViewById(R.id.btnTobaccoCounter)) {
             // TODO: Add moving to TobaccoCounterActivity
+        }
+
+        // Add vice
+        if (v == findViewById(R.id.btnAddVice)) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            Log.i("builder status", builder.toString());
+            builder.setTitle(R.string.viceDialogTitle)
+                    .setItems(EventSingleton.getEventInstance().getVices(), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch(which) {
+                                case 0: // Alcohol
+                                    LayoutInflater.from(MainActivity.this).inflate(R.layout.alcohol_box_layout, findViewById(R.id.scrollViewChildLayout));
+                                    break;
+                                case 1: // Tobacco
+                                    LayoutInflater.from(MainActivity.this).inflate(R.layout.tobacco_box_layout, findViewById(R.id.scrollViewChildLayout));
+                                    break;
+                                case 2: //Snuff
+                                    LayoutInflater.from(MainActivity.this).inflate(R.layout.snuff_box_layout, findViewById(R.id.scrollViewChildLayout));
+                                    break;
+                            }
+                        }
+                    });
+            AlertDialog dialog = builder.create();
+            dialog.show();
         }
     }
 }

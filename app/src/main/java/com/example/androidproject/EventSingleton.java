@@ -8,6 +8,8 @@ public class EventSingleton {
 
     private ArrayList<AddMovement> movementEventList;
 
+    private CharSequence[] vices = {"Alkoholi", "Tupakka", "Nuuska"};
+
     private EventSingleton() {
         viceEventList = new ArrayList<>();
         movementEventList = new ArrayList<>();
@@ -41,6 +43,7 @@ public class EventSingleton {
         return movementEventList.get(index);
     }
 
-
-
+    public CharSequence[] getVices() {
+        return vices;
+    }
 }
