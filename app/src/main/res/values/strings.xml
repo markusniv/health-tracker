@@ -2,4 +2,13 @@
     <string name="app_name">AndroidProject</string>
     <string name="tobacco_price">Syötä hinta</string>
     <string name="viceDialogTitle">Valitse lisättävä pahe</string>
+    <string name="btnAddVice">Lisää pahe</string>
+    <string name="btnRemoveVice">Poista pahe</string>
+    <string name="viceAddDialogTitle">Valitse lisättävä pahe</string>
+    <string name="viceRemoveDialogTitle">Valitse poistettava pahe</string>
+    <string name="viceRemoveDialogOkButton">Poista valitut</string>
+    <string name="viceRemoveDialogNegativeButton">Peruuta</string>
+    <string name="alcohol">Alkoholi</string>
+    <string name="tobacco">Tupakka</string>
+    <string name="snuff">Nuuska</string>
 </resources>

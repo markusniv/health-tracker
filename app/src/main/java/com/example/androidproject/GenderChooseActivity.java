@@ -35,6 +35,9 @@ public class GenderChooseActivity extends AppCompatActivity {
             prefEdit.putString("GENDER_KEY", "Female");
         }
         prefEdit.putBoolean("FIRST_USER_LAUNCH", false);
+        prefEdit.putBoolean("VICE_ALCOHOL_ADDED", false);
+        prefEdit.putBoolean("VICE_TOBACCO_ADDED", false);
+        prefEdit.putBoolean("VICE_SNUFF_ADDED", false);
         prefEdit.commit();
         Intent backToMain = new Intent(GenderChooseActivity.this, MainActivity.class);
         startActivity(backToMain);

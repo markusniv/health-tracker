@@ -8,7 +8,9 @@ public class EventSingleton {
 
     private ArrayList<AddMovement> movementEventList;
 
-    private CharSequence[] vices = {"Alkoholi", "Tupakka", "Nuuska"};
+    private CharSequence[] vices = {MyApplication.getAppContext().getResources().getString(R.string.alcohol),
+                                    MyApplication.getAppContext().getResources().getString(R.string.tobacco),
+                                    MyApplication.getAppContext().getResources().getString(R.string.snuff)};
 
     private EventSingleton() {
         viceEventList = new ArrayList<>();
