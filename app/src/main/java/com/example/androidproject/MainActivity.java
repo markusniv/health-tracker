@@ -1,5 +1,6 @@
 package com.example.androidproject;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
@@ -8,12 +9,15 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.EventLog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -141,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
             dialog.show();
         }
     }
+
     private void updateUI() {
         SharedPreferences prefGet = getSharedPreferences(PREFS_NAME, Activity.MODE_PRIVATE);
 
@@ -166,6 +171,13 @@ public class MainActivity extends AppCompatActivity {
         if (prefGet.getBoolean("VICE_TOBACCO_ADDED", true)) {
             if (findViewById(R.id.tobaccoLayout) == null) {
                 LayoutInflater.from(MainActivity.this).inflate(R.layout.tobacco_box_layout, findViewById(R.id.scrollViewChildLayout));
+                TextView weekPrice, monthPrice, lostTimeWeek, lostTimeMonth;
+                weekPrice = findViewById(R.id.textTobaccoPriceWeek);
+                monthPrice = findViewById(R.id.textTobaccoPriceMonth);
+                lostTimeWeek = findViewById(R.id.textTobaccoLostTimeWeek);
+                lostTimeMonth = findViewById(R.id.textTobaccoLostTimeMonth);
+                weekPrice.setText(EventSingleton.getEventInstance().getWeeklyTobaccoPrice() + " €");
+
             }
         } else {
             if (findViewById(R.id.tobaccoLayout) != null) {

@@ -11,4 +11,6 @@
     <string name="alcohol">Alkoholi</string>
     <string name="tobacco">Tupakka</string>
     <string name="snuff">Nuuska</string>
+    <string name="thisWeek">Tällä viikolla</string>
+    <string name="thisMonth">Tässä kuussa</string>
 </resources>

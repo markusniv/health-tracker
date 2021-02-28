@@ -13,7 +13,12 @@ public class AddTobacco extends AddVice {
         return tobaccoProduct;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
     public String toString() {
         return tobaccoProduct.getName() + " " + price + " " + this.getCurrentTime();
     }
+
 }
