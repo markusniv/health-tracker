@@ -48,6 +48,11 @@ public class MainActivity extends AppCompatActivity {
         // Alcohol buttons
         if (v == findViewById(R.id.btnAddAlcohol)) {
             // TODO: Add moving to AlcoholAddActivity
+            Log.d("Note", "Adding alcohol portion");
+
+            Intent alcoholIntent = new Intent(MainActivity.this, AlcoholActivity.class);
+            startActivity(alcoholIntent);
+
         }
         if (v == findViewById(R.id.btnDrivingAbility)) {
             // TODO: Add moving to DrivingAbilityActivity
