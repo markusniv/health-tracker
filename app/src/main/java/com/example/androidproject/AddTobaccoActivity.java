@@ -15,6 +15,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 
 /**
  * Activity in which the user chooses a tobacco they've smoked and enters its price. From this data,
@@ -26,11 +27,15 @@ public class AddTobaccoActivity extends AppCompatActivity {
     private int regularPack = 20;
     private int maxiPack = 27;
     private DecimalFormat df = new DecimalFormat("0.00");
+    private DecimalFormatSymbols dfs = new DecimalFormatSymbols();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_tobacco);
+
+        dfs.setDecimalSeparator('.');
+        df.setDecimalFormatSymbols(dfs);
 
         ListView lv = findViewById(R.id.tobaccoList);
 

@@ -3,6 +3,7 @@ package com.example.androidproject;
 import android.os.Build;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -18,10 +19,13 @@ public class EventSingleton {
                                     MyApplication.getAppContext().getResources().getString(R.string.snuff)};
 
     private DecimalFormat df = new DecimalFormat("0.00");
+    private DecimalFormatSymbols dfs = new DecimalFormatSymbols();
 
     private EventSingleton() {
         viceEventList = new ArrayList<>();
         movementEventList = new ArrayList<>();
+        dfs.setDecimalSeparator('.');
+        df.setDecimalFormatSymbols(dfs);
     }
 
     public static EventSingleton getEventInstance() {
