@@ -161,6 +161,16 @@ public class MainActivity extends AppCompatActivity {
         if (prefGet.getBoolean("VICE_ALCOHOL_ADDED", true)) {
             if (findViewById(R.id.alcoholLayout) == null) {
                 LayoutInflater.from(MainActivity.this).inflate(R.layout.alcohol_box_layout, findViewById(R.id.scrollViewChildLayout));
+                TextView weekPrice, monthPrice, consumptionWeek, consumptionMonth;
+                weekPrice = findViewById(R.id.textAlcoholPriceWeek);
+                monthPrice = findViewById(R.id.textAlcoholPriceMonth);
+                consumptionWeek = findViewById(R.id.textAlcoholWeeklyConsumption);
+                consumptionMonth = findViewById(R.id.textAlcoholMonthlyConsumption);
+
+                weekPrice.setText(EventSingleton.getEventInstance().getPrice("Alcohol", "Week") + " €");
+                monthPrice.setText(EventSingleton.getEventInstance().getPrice("Alcohol", "Month") + " €");
+                consumptionWeek.setText(EventSingleton.getEventInstance().getAlcoholConsumption("Week"));
+                consumptionMonth.setText(EventSingleton.getEventInstance().getAlcoholConsumption("Month"));
             }
         } else {
             if (findViewById(R.id.alcoholLayout) != null) {
@@ -176,7 +186,11 @@ public class MainActivity extends AppCompatActivity {
                 monthPrice = findViewById(R.id.textTobaccoPriceMonth);
                 lostTimeWeek = findViewById(R.id.textTobaccoLostTimeWeek);
                 lostTimeMonth = findViewById(R.id.textTobaccoLostTimeMonth);
-                weekPrice.setText(EventSingleton.getEventInstance().getWeeklyTobaccoPrice() + " €");
+
+                weekPrice.setText(EventSingleton.getEventInstance().getPrice("Tobacco", "Week") + " €");
+                monthPrice.setText(EventSingleton.getEventInstance().getPrice("Tobacco", "Month") + " €");
+                lostTimeWeek.setText(EventSingleton.getEventInstance().getTobaccoTime("Week"));
+                lostTimeMonth.setText(EventSingleton.getEventInstance().getTobaccoTime("Month"));
 
             }
         } else {
