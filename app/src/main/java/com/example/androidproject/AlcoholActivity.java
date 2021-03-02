@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class AlcoholActivity extends AppCompatActivity {
 
@@ -32,7 +33,10 @@ public class AlcoholActivity extends AppCompatActivity {
         alcoholList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                EditText alcoholPriceField = findViewById(R.id.priceField);
                 alcohol = AlcoholSingleton.getAlcoholInstance().getDrinks().get(position);
+                alcoholPriceField.setText(Double.toString(alcohol.getDefaultPrice()), TextView.BufferType.EDITABLE);
+
             }
         });
     }
@@ -41,6 +45,14 @@ public class AlcoholActivity extends AppCompatActivity {
         String alcoholPriceString = alcoholPriceField.getText().toString();
 
         double alcoholPrice = Double.parseDouble(alcoholPriceString);
+        /*
+        double alcoholPrice;
+        if (!alcoholPriceString.equals("")) {
+            alcoholPrice = Double.parseDouble(alcoholPriceString);
+        } else {
+            alcoholPrice =
+        }
+*/
         AddAlcohol addAlcoholEvent = new AddAlcohol(alcohol, alcoholPrice);
         EventSingleton.getEventInstance().AddViceEvent(addAlcoholEvent);
 
