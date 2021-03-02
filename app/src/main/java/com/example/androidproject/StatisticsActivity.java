@@ -9,6 +9,7 @@ import android.widget.RadioGroup;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -19,6 +20,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.DefaultValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -50,14 +52,6 @@ public class StatisticsActivity extends AppCompatActivity {
         });
 
         updateUI();
-    }
-
-    public ArrayList<String> getAreaCount(List<String> timeframe) {
-        ArrayList<String> label = new ArrayList<>();
-        for (int i = 0; i < timeframe.size(); i++) {
-            label.add(timeframe.get(i));
-        }
-        return label;
     }
 
     private void updateUI() {
@@ -127,7 +121,6 @@ public class StatisticsActivity extends AppCompatActivity {
                 break;
         }
 
-
         BarDataSet dataSet;
         switch(type) {
             case "Alcohol":
@@ -142,21 +135,34 @@ public class StatisticsActivity extends AppCompatActivity {
 
         dataSet.setValueFormatter(new DefaultValueFormatter(0));
         BarData barData = new BarData(dataSet);
+        barData.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                if (value > 0){
+                    return super.getFormattedValue(value);
+                }else{
+                    return "";
+                }
+            }
+        });
         BarChart chart = findViewById(R.id.chart);
         chart.setData(barData);
         XAxis xAxis = chart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
         if (timeframe.equals("Week")) {
-            xAxis.setValueFormatter(new IndexAxisValueFormatter(getAreaCount(days)));
+            xAxis.setValueFormatter(new IndexAxisValueFormatter(days));
         } if (timeframe.equals("Year")){
-            xAxis.setValueFormatter(new IndexAxisValueFormatter(getAreaCount(months)));
+            xAxis.setValueFormatter(new IndexAxisValueFormatter(months));
         }
 
         YAxis yAxis = chart.getAxisLeft();
+        yAxis.setGranularity(1.0f);
+        yAxis.setGranularityEnabled(true);
         yAxis.setValueFormatter(new DefaultValueFormatter(0));
         YAxis rightAxis = chart.getAxisRight();
         rightAxis.setEnabled(false);
+        chart.getDescription().setEnabled(false);
         chart.invalidate();
     }
 
