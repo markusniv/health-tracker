@@ -26,11 +26,6 @@ public class EventSingleton {
         movementEventList = new ArrayList<>();
         dfs.setDecimalSeparator('.');
         df.setDecimalFormatSymbols(dfs);
-
-        for (int i = 0; i < 152; i++) {
-            AddTobacco testEvent = new AddTobacco(new Tobacco("Test Tobacco", 1, 1, 1), 6);
-            AddViceEvent(testEvent);
-        }
     }
 
     public static EventSingleton getEventInstance() {
