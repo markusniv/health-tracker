@@ -33,6 +33,22 @@ public class StatisticsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
 
+        RadioGroup viceRadioGroup = findViewById(R.id.radioGroupVices);
+        RadioGroup timeframeRadioGroup = findViewById(R.id.radioGroupTimeframe);
+
+        viceRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                updateUI();
+            }
+        });
+        timeframeRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                updateUI();
+            }
+        });
+
         updateUI();
     }
 
@@ -58,7 +74,7 @@ public class StatisticsActivity extends AppCompatActivity {
                 createChart(addAlcohols, "Week", "Alcohol");
             }
             if (chosenTimeframe == findViewById(R.id.radioYearly)) {
-                createChart(addAlcohols, "Yearly", "Alcohol");
+                createChart(addAlcohols, "Year", "Alcohol");
             }
         }
         if (chosenVice == findViewById(R.id.radioTobacco)) {
@@ -66,7 +82,7 @@ public class StatisticsActivity extends AppCompatActivity {
                 createChart(addTobaccos, "Week", "Tobacco");
             }
             if (chosenTimeframe == findViewById(R.id.radioYearly)) {
-                createChart(addTobaccos, "Yearly", "Tobacco");
+                createChart(addTobaccos, "Year", "Tobacco");
             }
         }
     }
@@ -81,9 +97,9 @@ public class StatisticsActivity extends AppCompatActivity {
         Calendar eventCalendar = Calendar.getInstance();
         switch(timeframe) {
             case "Week":
-                amount = 7;
+                amount = days.size();
                 for (int i = 0; i < 12; i++) {
-                    for (int p = 0; i < amount; p++) {
+                    for (int p = 0; p < amount; p++) {
                         int viceCount = 0;
                         for (AddVice addVice : viceArrayList) {
                             eventCalendar.setTime(addVice.getCurrentTime());
@@ -97,7 +113,7 @@ public class StatisticsActivity extends AppCompatActivity {
 
                 break;
             case "Year":
-                amount = 12;
+                amount = days.size();
                 for (int i = 0; i < amount; i++) {
                     int viceCount = 0;
                     for (AddVice addVice : viceArrayList) {
@@ -133,7 +149,7 @@ public class StatisticsActivity extends AppCompatActivity {
         xAxis.setDrawGridLines(false);
         if (timeframe.equals("Week")) {
             xAxis.setValueFormatter(new IndexAxisValueFormatter(getAreaCount(days)));
-        } else {
+        } if (timeframe.equals("Year")){
             xAxis.setValueFormatter(new IndexAxisValueFormatter(getAreaCount(months)));
         }
 
