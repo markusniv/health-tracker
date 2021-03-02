@@ -39,8 +39,10 @@ public class MainActivity extends AppCompatActivity {
 
         updateUI();
 
-        //Create instance of Track movement
+        //Create instance of TrackMovement.
         movementTracker = new TrackMovement();
+        //Start tracking user activity.
+        movementTracker.track();
     }
 
     /**
