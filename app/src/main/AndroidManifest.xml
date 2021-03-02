@@ -12,6 +12,7 @@
         android:theme="@style/Theme.AndroidProject">
         <activity android:name=".AddTobaccoActivity"></activity>
         <activity android:name=".AlcoholActivity"></activity>
+        <activity android:name=".MovementActivity"></activity>
         <activity android:name=".GenderChooseActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

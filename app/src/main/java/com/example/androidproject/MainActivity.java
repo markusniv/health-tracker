@@ -30,12 +30,19 @@ public class MainActivity extends AppCompatActivity {
     public static final String EXTRA = "com.example.androidproject.EXTRA";
     final String PREFS_NAME = "PreferencesFile";
 
+    private TrackMovement movementTracker;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         updateUI();
+
+        //Create instance of TrackMovement.
+        movementTracker = new TrackMovement();
+        //Start tracking user activity.
+        movementTracker.track();
     }
 
     /**
@@ -237,5 +244,13 @@ public class MainActivity extends AppCompatActivity {
             vices.add(getResources().getString(R.string.snuff));
         }
         return vices;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        //Unregister sensor listeners.
+        movementTracker.unregisterSensorListerers();
     }
 }
