@@ -8,10 +8,14 @@
 
     <ListView
         android:id="@+id/alcoholList"
-        android:layout_width="295dp"
-        android:layout_height="189dp"
-        android:layout_marginTop="64dp"
+        android:layout_width="342dp"
+        android:layout_height="288dp"
+        android:layout_marginTop="32dp"
+        android:choiceMode="singleChoice"
+        android:listSelector="@android:color/darker_gray"
+        app:layout_constraintBottom_toTopOf="@+id/questionIkon"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -22,19 +26,23 @@
         android:layout_marginTop="32dp"
         android:gravity="center"
         android:text="Paljonko maksoit?"
+        app:layout_constraintBottom_toTopOf="@+id/priceField"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/alcoholList" />
 
     <EditText
-        android:id="@+id/priceIkon"
+        android:id="@+id/priceField"
         android:layout_width="112dp"
         android:layout_height="68dp"
         android:layout_marginTop="32dp"
         android:ems="10"
         android:gravity="center"
         android:inputType="number"
+        app:layout_constraintBottom_toTopOf="@+id/buttonOk"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/questionIkon" />
 
@@ -42,11 +50,15 @@
         android:id="@+id/buttonOk"
         android:layout_width="86dp"
         android:layout_height="75dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
+        android:onClick="onClick"
         android:text="OK"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/priceIkon" />
+        app:layout_constraintTop_toBottomOf="@+id/priceField" />
 
     <TextView
         android:id="@+id/euro"
@@ -59,7 +71,7 @@
         android:text="€"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/buttonOk"
-        app:layout_constraintStart_toEndOf="@+id/priceIkon"
+        app:layout_constraintStart_toEndOf="@+id/priceField"
         app:layout_constraintTop_toBottomOf="@+id/questionIkon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
