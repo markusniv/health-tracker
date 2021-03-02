@@ -29,11 +29,11 @@ public class MovementActivity extends AppCompatActivity implements SensorEventLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movement);
+        /*setContentView(R.layout.activity_movement);
 
         motionDetectionX = findViewById(R.id.motionTextX);
         motionDetectionY = findViewById(R.id.motionTextY);
-        motionDetectionZ = findViewById(R.id.motionTextZ);
+        motionDetectionZ = findViewById(R.id.motionTextZ);*/
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 

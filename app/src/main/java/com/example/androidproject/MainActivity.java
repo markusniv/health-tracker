@@ -39,10 +39,10 @@ public class MainActivity extends AppCompatActivity {
 
         updateUI();
 
-        //Create instance of TrackMovement.
+        /*//Create instance of TrackMovement.
         movementTracker = new TrackMovement();
         //Start tracking user activity.
-        movementTracker.track();
+        movementTracker.track();*/
     }
 
     /**
@@ -253,6 +253,6 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
 
         //Unregister sensor listeners.
-        movementTracker.unregisterSensorListerers();
+        /*movementTracker.unregisterSensorListerers();*/
     }
 }
