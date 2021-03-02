@@ -36,42 +36,37 @@
         android:id="@+id/priceField"
         android:layout_width="112dp"
         android:layout_height="68dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginBottom="100dp"
         android:ems="10"
-        android:gravity="center"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         app:layout_constraintBottom_toTopOf="@+id/buttonOk"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/questionIkon" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/buttonOk"
         android:layout_width="86dp"
         android:layout_height="75dp"
-        android:layout_marginTop="32dp"
         android:layout_marginBottom="32dp"
         android:onClick="onClick"
         android:text="OK"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/priceField" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/euro"
         android:layout_width="43dp"
         android:layout_height="34dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginBottom="64dp"
         android:text="€"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/buttonOk"
         app:layout_constraintStart_toEndOf="@+id/priceField"
-        app:layout_constraintTop_toBottomOf="@+id/questionIkon" />
+        app:layout_constraintTop_toBottomOf="@+id/questionIkon"
+        app:layout_constraintVertical_bias="0.494" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

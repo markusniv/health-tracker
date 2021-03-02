@@ -26,6 +26,10 @@ public class Alcohol extends Vice {
         return volPercent;
     }
 
+    public String toString() {
+        return this.name;
+    }
+
 
 
 }
