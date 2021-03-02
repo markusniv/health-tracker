@@ -240,4 +240,12 @@ public class MainActivity extends AppCompatActivity {
         }
         return vices;
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        //Unregister sensor listeners.
+        movementTracker.unregisterSensorListerers();
+    }
 }

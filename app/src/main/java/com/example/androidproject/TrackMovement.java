@@ -32,18 +32,23 @@ public class TrackMovement extends AppCompatActivity implements SensorEventListe
     private boolean accelerometerAvailable;
     private boolean gyroscopeAvailable;
 
-    private double xAcceleration;
-    private double yAcceleration;
-    private double zAcceleration;
-    private double xRotation;
-    private double yRotation;
-    private double zRotation;
+    private float xAcceleration;
+    private float yAcceleration;
+    private float zAcceleration;
+    private float xRotation;
+    private float yRotation;
+    private float zRotation;
 
 
 
     public void track() {
+        this.startSensors();
+    }
 
-        //Instantiate Andoroid SensorManager.
+
+    //Initialize sensors and their listeners
+    private void startSensors() {
+        //Instantiate Android SensorManager.
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
         //Check if sensors are available.
@@ -68,8 +73,6 @@ public class TrackMovement extends AppCompatActivity implements SensorEventListe
             sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
             sensorManager.registerListener(this, gyroscope, SensorManager.SENSOR_DELAY_NORMAL);
         }
-
-
     }
 
     @Override
@@ -78,12 +81,23 @@ public class TrackMovement extends AppCompatActivity implements SensorEventListe
         Sensor activeSensor = event.sensor;
 
         if (activeSensor.getType() == Sensor.TYPE_ACCELEROMETER_UNCALIBRATED) {
-
+            xAcceleration = event.values[0];
+            yAcceleration = event.values[1];
+            zAcceleration = event.values[2];
+        }
+        if (activeSensor.getType() == Sensor.TYPE_GYROSCOPE_UNCALIBRATED) {
+            xRotation = event.values[0];
+            yRotation = event.values[1];
+            zRotation = event.values[2];
         }
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
+    public void unregisterSensorListerers() {
 
     }
 }
