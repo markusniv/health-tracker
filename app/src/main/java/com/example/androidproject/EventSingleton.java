@@ -87,7 +87,7 @@ public class EventSingleton {
                         break;
                     case "Alcohol":
                         if (viceEventList.get(i) instanceof AddAlcohol) {
-                            price += ((AddAlcohol) viceEventList.get(i)).getAlcohol().getPrice();
+                            price += ((AddAlcohol) viceEventList.get(i)).getPrice();
                         }
                         break;
                 }
