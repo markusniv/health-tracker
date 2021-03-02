@@ -49,7 +49,9 @@ public class MainActivity extends AppCompatActivity {
             // TODO: Add moving to ActivityScreenActivity
         }
         if (v == findViewById(R.id.btnStatistics)) {
-            // TODO: Add moving to StatisticsActivity
+            Intent statistics = new Intent(MainActivity.this, StatisticsActivity.class);
+            Log.i("statistics", statistics.toString());
+            startActivity(statistics);
         }
 
         // Alcohol buttons

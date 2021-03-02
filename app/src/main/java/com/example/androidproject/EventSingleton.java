@@ -163,4 +163,24 @@ public class EventSingleton {
         }
         return viceEvents;
     }
+
+    public ArrayList<AddVice> getSpecificViceEvents(String vice) {
+        ArrayList<AddVice> viceEvents = new ArrayList<>();
+
+        for (int i = 0; i < viceEventList.size(); i++) {
+            switch(vice) {
+                case "Tobacco":
+                    if (viceEventList.get(i) instanceof AddTobacco) {
+                        viceEvents.add(viceEventList.get(i));
+                    }
+                    break;
+                case "Alcohol":
+                    if (viceEventList.get(i) instanceof AddAlcohol) {
+                        viceEvents.add(viceEventList.get(i));
+                    }
+                    break;
+            }
+        }
+        return viceEvents;
+    }
 }
