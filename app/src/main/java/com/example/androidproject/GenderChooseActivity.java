@@ -8,13 +8,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
-/***
+/**
  * Activity that is ran the first time user launches the app. Lets the user pick their gender
  * which is then used for the calculations the app does.
  */
 
 public class GenderChooseActivity extends AppCompatActivity {
-    public static final String EXTRA = "com.example.androidproject.EXTRA";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +35,9 @@ public class GenderChooseActivity extends AppCompatActivity {
             prefEdit.putString("GENDER_KEY", "Female");
         }
         prefEdit.putBoolean("FIRST_USER_LAUNCH", false);
+        prefEdit.putBoolean("VICE_ALCOHOL_ADDED", false);
+        prefEdit.putBoolean("VICE_TOBACCO_ADDED", false);
+        prefEdit.putBoolean("VICE_SNUFF_ADDED", false);
         prefEdit.commit();
         Intent backToMain = new Intent(GenderChooseActivity.this, MainActivity.class);
         startActivity(backToMain);

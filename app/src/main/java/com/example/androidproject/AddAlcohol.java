@@ -7,4 +7,8 @@ public class AddAlcohol extends AddVice{
     public AddAlcohol(Alcohol alcohol) {
         this.alcohol = alcohol;
     }
+
+    public Alcohol getAlcohol() {
+        return alcohol;
+    }
 }

@@ -3,20 +3,22 @@ package com.example.androidproject;
 public class Alcohol extends Vice {
 
     private String name;
-    private double size;
+    private int size;
     private double volPercent;
+    private double price;
 
-    public Alcohol(String name, double size, double volPercent) {
+    public Alcohol(String name, int size, double volPercent, double price) {
         this.name = name;
         this.size = size;
         this.volPercent = volPercent;
+        this.price = price;
     }
 
     public String getName() {
         return name;
     }
 
-    public double getSize() {
+    public int getSize() {
         return size;
     }
 
@@ -24,10 +26,8 @@ public class Alcohol extends Vice {
         return volPercent;
     }
 
-    @Override
-    public String toString() {
-        return this.name;
-
+    public double getPrice() {
+        return price;
     }
 
 }
