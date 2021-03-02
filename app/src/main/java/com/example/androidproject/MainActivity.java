@@ -30,12 +30,17 @@ public class MainActivity extends AppCompatActivity {
     public static final String EXTRA = "com.example.androidproject.EXTRA";
     final String PREFS_NAME = "PreferencesFile";
 
+    private TrackMovement movementTracker;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         updateUI();
+
+        //Create instance of Track movement
+        movementTracker = new TrackMovement();
     }
 
     /**
