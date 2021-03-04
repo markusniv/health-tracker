@@ -26,8 +26,13 @@ import android.widget.TextView;
 import com.google.android.material.bottomnavigation.BottomNavigationMenu;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.lang.reflect.Array;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import static android.content.DialogInterface.BUTTON1;
 
@@ -37,7 +42,11 @@ import static android.content.DialogInterface.BUTTON1;
  */
 public class MainActivity extends AppCompatActivity {
     public static final String EXTRA = "com.example.androidproject.EXTRA";
-    final String PREFS_NAME = "PreferencesFile";
+    public static final String PREFS_NAME = "PreferencesFile";
+
+    private CharSequence[] vices = {MyApplication.getAppContext().getResources().getString(R.string.alcohol),
+            MyApplication.getAppContext().getResources().getString(R.string.tobacco),
+            MyApplication.getAppContext().getResources().getString(R.string.snuff)};
 
     private TrackMovement movementTracker;
 
@@ -123,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
             SharedPreferences prefGet = getSharedPreferences(PREFS_NAME, Activity.MODE_PRIVATE);
 
             builder.setTitle(R.string.viceAddDialogTitle)
-                    .setItems(EventSingleton.getEventInstance().getVices(), new DialogInterface.OnClickListener() {
+                    .setItems(vices, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
@@ -201,7 +210,6 @@ public class MainActivity extends AppCompatActivity {
      */
     private void updateUI() {
         SharedPreferences prefGet = getSharedPreferences(PREFS_NAME, Activity.MODE_PRIVATE);
-
         // If launching for the first time, move to GenderChooseActivity to determine user gender
         if (prefGet.getBoolean("FIRST_USER_LAUNCH", true)) {
             Log.d("Note", "First time launched");
@@ -276,7 +284,6 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Get a CharSequence list of all the vices currently active to determine which ones can be added
      * and removed still
-     * @param prefGet Current SharedPreferences
      * @return CharSequence list of all currently active vices
      */
     private List<CharSequence> getViceList(SharedPreferences prefGet) {
@@ -294,8 +301,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
+
 
         //Unregister sensor listeners.
         /*movementTracker.unregisterSensorListerers();*/

@@ -2,7 +2,9 @@ package com.example.androidproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +13,13 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.google.gson.Gson;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
+import static com.example.androidproject.MainActivity.PREFS_NAME;
 
 public class AlcoholActivity extends AppCompatActivity {
 
@@ -57,6 +66,18 @@ public class AlcoholActivity extends AppCompatActivity {
         EventSingleton.getEventInstance().AddViceEvent(addAlcoholEvent);
 
         Log.i("AddAlcohol event", EventSingleton.getEventInstance().getViceEventList().toString());
+
+        SharedPreferences prefGet = getSharedPreferences(PREFS_NAME, Activity.MODE_PRIVATE);
+        SharedPreferences.Editor prefEdit = prefGet.edit();
+        Gson gson = new Gson();
+
+        ArrayList<AddAlcohol> addAlcohols = new ArrayList<>();
+        for (int i = 0; i < EventSingleton.getEventInstance().getSpecificViceEvents("Alcohol").size(); i++) {
+            addAlcohols.add((AddAlcohol)EventSingleton.getEventInstance().getSpecificViceEvents("Alcohol").get(i));
+        }
+        String viceEventJson = gson.toJson(addAlcohols);
+        prefEdit.putString("EVENT_SINGLETON_ALCOHOL" , viceEventJson);
+        prefEdit.commit();
 
         Intent intent = new Intent(AlcoholActivity.this, MainActivity.class);
         startActivity(intent);

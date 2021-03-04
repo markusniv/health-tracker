@@ -1,6 +1,9 @@
 package com.example.androidproject;
 
+import android.content.SharedPreferences;
 import android.os.Build;
+import android.util.EventLog;
+import android.util.Log;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -14,10 +17,6 @@ public class EventSingleton {
 
     private ArrayList<AddMovement> movementEventList;
 
-    private CharSequence[] vices = {MyApplication.getAppContext().getResources().getString(R.string.alcohol),
-                                    MyApplication.getAppContext().getResources().getString(R.string.tobacco),
-                                    MyApplication.getAppContext().getResources().getString(R.string.snuff)};
-
     private DecimalFormat df = new DecimalFormat("0.00");
     private DecimalFormatSymbols dfs = new DecimalFormatSymbols();
 
@@ -26,6 +25,7 @@ public class EventSingleton {
         movementEventList = new ArrayList<>();
         dfs.setDecimalSeparator('.');
         df.setDecimalFormatSymbols(dfs);
+
     }
 
     public static EventSingleton getEventInstance() {
@@ -56,8 +56,12 @@ public class EventSingleton {
         return movementEventList.get(index);
     }
 
-    public CharSequence[] getVices() {
-        return vices;
+    public void setViceEventList(ArrayList<AddVice> viceEventList) {
+        this.viceEventList = viceEventList;
+    }
+
+    public void setMovementEventList(ArrayList<AddMovement> movementEventList) {
+        this.movementEventList = movementEventList;
     }
 
     /**
@@ -99,6 +103,7 @@ public class EventSingleton {
                 }
             }
         }
+        Log.i("price: ", String.valueOf(price));
         return Double.parseDouble(df.format(price));
     }
 

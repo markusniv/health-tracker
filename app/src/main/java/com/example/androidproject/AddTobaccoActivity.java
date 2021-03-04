@@ -2,7 +2,9 @@ package com.example.androidproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -14,8 +16,13 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.google.gson.Gson;
+
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.ArrayList;
+
+import static com.example.androidproject.MainActivity.PREFS_NAME;
 
 /**
  * Activity in which the user chooses a tobacco they've smoked and enters its price. From this data,
@@ -79,6 +86,18 @@ public class AddTobaccoActivity extends AppCompatActivity {
         EventSingleton.getEventInstance().AddViceEvent(addTobaccoEvent);
 
         Log.i("AddTobacco event", EventSingleton.getEventInstance().getViceEventList().toString());
+
+        SharedPreferences prefGet = getSharedPreferences(PREFS_NAME, Activity.MODE_PRIVATE);
+        SharedPreferences.Editor prefEdit = prefGet.edit();
+        Gson gson = new Gson();
+
+        ArrayList<AddTobacco> addTobaccos = new ArrayList<>();
+        for (int i = 0; i < EventSingleton.getEventInstance().getSpecificViceEvents("Tobacco").size(); i++) {
+            addTobaccos.add((AddTobacco)EventSingleton.getEventInstance().getSpecificViceEvents("Tobacco").get(i));
+        }
+        String viceEventJson = gson.toJson(addTobaccos);
+        prefEdit.putString("EVENT_SINGLETON_TOBACCO" , viceEventJson);
+        prefEdit.commit();
 
         Intent intent = new Intent(AddTobaccoActivity.this, MainActivity.class);
         startActivity(intent);
