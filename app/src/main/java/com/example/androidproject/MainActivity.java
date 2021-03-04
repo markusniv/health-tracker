@@ -1,5 +1,6 @@
 package com.example.androidproject;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -15,10 +16,15 @@ import android.os.Bundle;
 import android.util.EventLog;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationMenu;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +42,32 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.menu_vice_activity);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.menu_vice_activity:
+                        break;
+
+                    case R.id.menu_movement_activity:
+                        Intent movementActivity = new Intent(MainActivity.this, MovementActivity.class);
+                        startActivity(movementActivity);
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                        break;
+
+                    case R.id.menu_statistics_activity:
+                        Intent statisticsActivity = new Intent(MainActivity.this, StatisticsActivity.class);
+                        startActivity(statisticsActivity);
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                        break;
+                }
+                return false;
+
+            }
+        });
 
         updateUI();
 

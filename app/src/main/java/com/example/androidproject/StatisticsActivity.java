@@ -1,9 +1,12 @@
 package com.example.androidproject;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -21,6 +24,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.DefaultValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -34,6 +38,32 @@ public class StatisticsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.menu_statistics_activity);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.menu_vice_activity:
+                        Intent statisticsActivity = new Intent(StatisticsActivity.this, MainActivity.class);
+                        startActivity(statisticsActivity);
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                        break;
+
+                    case R.id.menu_movement_activity:
+                        Intent movementActivity = new Intent(StatisticsActivity.this, MovementActivity.class);
+                        startActivity(movementActivity);
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                        break;
+
+                    case R.id.menu_statistics_activity:
+                        break;
+                }
+                return false;
+
+            }
+        });
 
         RadioGroup viceRadioGroup = findViewById(R.id.radioGroupVices);
         RadioGroup timeframeRadioGroup = findViewById(R.id.radioGroupTimeframe);
