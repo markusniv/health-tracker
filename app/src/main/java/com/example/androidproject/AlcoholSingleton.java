@@ -4,6 +4,9 @@ package com.example.androidproject;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A singleton that stores all the alcohol drinks
+ */
 public class AlcoholSingleton {
     public static final AlcoholSingleton AlcoholInstance = new AlcoholSingleton();
     private List<Alcohol> drinks;
@@ -22,9 +25,19 @@ public class AlcoholSingleton {
         drinks.add(new Alcohol("Likööri shotti", 0.4, 16.0));
         drinks.add(new Alcohol("Vahva shotti 40%", 0.04, 40.0));
     }
+
+    /**
+     * Get the list of all the alcohol drinks
+     * @return A list containing all the alcohol drinks
+     */
     public List<Alcohol> getDrinks()    {
         return this.drinks;
     }
+
+    /**
+     * Get the singleton instance
+     * @return Instance of the AlcoholSingleton
+     */
     public static AlcoholSingleton getAlcoholInstance() {
         return AlcoholInstance;
     }
