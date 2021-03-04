@@ -1,5 +1,6 @@
 package com.example.androidproject;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -15,10 +16,15 @@ import android.os.Bundle;
 import android.util.EventLog;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationMenu;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,12 +36,45 @@ public class MainActivity extends AppCompatActivity {
     public static final String EXTRA = "com.example.androidproject.EXTRA";
     final String PREFS_NAME = "PreferencesFile";
 
+    private TrackMovement movementTracker;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.menu_vice_activity);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.menu_vice_activity:
+                        break;
+
+                    case R.id.menu_movement_activity:
+                        Intent movementActivity = new Intent(MainActivity.this, MovementActivity.class);
+                        startActivity(movementActivity);
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                        break;
+
+                    case R.id.menu_statistics_activity:
+                        Intent statisticsActivity = new Intent(MainActivity.this, StatisticsActivity.class);
+                        startActivity(statisticsActivity);
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                        break;
+                }
+                return false;
+
+            }
+        });
+
         updateUI();
+
+        /*//Create instance of TrackMovement.
+        movementTracker = new TrackMovement();
+        //Start tracking user activity.
+        movementTracker.track();*/
     }
 
     /**
@@ -49,7 +88,9 @@ public class MainActivity extends AppCompatActivity {
             // TODO: Add moving to ActivityScreenActivity
         }
         if (v == findViewById(R.id.btnStatistics)) {
-            // TODO: Add moving to StatisticsActivity
+            Intent statistics = new Intent(MainActivity.this, StatisticsActivity.class);
+            Log.i("statistics", statistics.toString());
+            startActivity(statistics);
         }
 
         // Alcohol buttons
@@ -237,5 +278,13 @@ public class MainActivity extends AppCompatActivity {
             vices.add(getResources().getString(R.string.snuff));
         }
         return vices;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        //Unregister sensor listeners.
+        /*movementTracker.unregisterSensorListerers();*/
     }
 }

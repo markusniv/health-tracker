@@ -60,6 +60,12 @@ public class EventSingleton {
         return vices;
     }
 
+    /**
+     *
+     * @param vice
+     * @param timeframe
+     * @return
+     */
     public double getPrice(String vice, String timeframe) {
         double price = 0;
         int currentTime = 0;
@@ -96,6 +102,11 @@ public class EventSingleton {
         return Double.parseDouble(df.format(price));
     }
 
+    /**
+     *
+     * @param timeframe
+     * @return
+     */
     public String getTobaccoTime(String timeframe) {
         String spentTimeString = "Menetetty aika ";
         int spentTimeMinutes = 0;
@@ -114,6 +125,11 @@ public class EventSingleton {
         return spentTimeString;
     }
 
+    /**
+     *
+     * @param timeframe
+     * @return
+     */
     public String getAlcoholConsumption(String timeframe) {
         String alcoholConsumptionString = "";
         ArrayList<AddVice> alcoholEvents = getSpecificViceEvents("Alcohol", timeframe);
@@ -128,6 +144,12 @@ public class EventSingleton {
         return alcoholConsumptionString;
     }
 
+    /**
+     *
+     * @param vice
+     * @param timeframe
+     * @return
+     */
     public ArrayList<AddVice> getSpecificViceEvents(String vice, String timeframe) {
         ArrayList<AddVice> viceEvents = new ArrayList<>();
         int currentTime = 0;
@@ -159,6 +181,31 @@ public class EventSingleton {
                             }
                         break;
                 }
+            }
+        }
+        return viceEvents;
+    }
+
+    /**
+     *
+     * @param vice
+     * @return
+     */
+    public ArrayList<AddVice> getSpecificViceEvents(String vice) {
+        ArrayList<AddVice> viceEvents = new ArrayList<>();
+
+        for (int i = 0; i < viceEventList.size(); i++) {
+            switch(vice) {
+                case "Tobacco":
+                    if (viceEventList.get(i) instanceof AddTobacco) {
+                        viceEvents.add(viceEventList.get(i));
+                    }
+                    break;
+                case "Alcohol":
+                    if (viceEventList.get(i) instanceof AddAlcohol) {
+                        viceEvents.add(viceEventList.get(i));
+                    }
+                    break;
             }
         }
         return viceEvents;
