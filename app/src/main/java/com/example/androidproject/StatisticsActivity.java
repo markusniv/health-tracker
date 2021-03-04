@@ -27,11 +27,16 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.lang.reflect.Array;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+/**
+ * An activity that shows the user their vice usage history. User can filter between a weekly and
+ * a yearly view. The data is made into bar charts using MPAndroidChart.
+ */
 public class StatisticsActivity extends AppCompatActivity {
 
     @Override
@@ -84,6 +89,9 @@ public class StatisticsActivity extends AppCompatActivity {
         updateUI();
     }
 
+    /**
+     * Change the chart view depending on the filters
+     */
     private void updateUI() {
         RadioGroup viceRadioGroup = findViewById(R.id.radioGroupVices);
         RadioButton chosenVice = findViewById(viceRadioGroup.getCheckedRadioButtonId());
@@ -111,14 +119,24 @@ public class StatisticsActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Creates the actual charts via MPAndroidChart
+     * @param viceArrayList The specific vice events we want to get, gotten from the EventSingleton. Either tobacco or alcohol.
+     * @param timeframe The timeframe we want to get the event from, entered as a String and it's either "Week" or "Year"
+     * @param type The type of the vice, entered as a String and it's either "Alcohol" or "Tobacco"
+     */
     private void createChart(ArrayList<AddVice> viceArrayList, String timeframe, String type) {
 
+        // Creating a list with all the months and a list with all the weekdays to be used in the value formatter for the bar chart to show
+        // strings instead of numbers on the X-axis
         List<String> months = Arrays.asList("Tammi", "Helmi", "Maalis", "Huhti", "Touko", "Kesä", "Heinä", "Elo", "Syys", "Loka", "Marras", "Joulu");
         List<String> days = Arrays.asList("Ma", "Ti", "Ke", "To", "Pe", "La", "Su");
 
         List<BarEntry> entries = new ArrayList<>();
         int amount = 0;
         Calendar eventCalendar = Calendar.getInstance();
+
+        // Checking all the events from viceArrayList that correspond with the filtered timeframe
         switch(timeframe) {
             case "Week":
                 amount = days.size();
@@ -137,7 +155,7 @@ public class StatisticsActivity extends AppCompatActivity {
 
                 break;
             case "Year":
-                amount = days.size();
+                amount = months.size();
                 for (int i = 0; i < amount; i++) {
                     int viceCount = 0;
                     for (AddVice addVice : viceArrayList) {
@@ -152,6 +170,7 @@ public class StatisticsActivity extends AppCompatActivity {
         }
 
         BarDataSet dataSet;
+        // Using the given vice type to determine the label for the bar chart
         switch(type) {
             case "Alcohol":
                 dataSet = new BarDataSet(entries, "Annoksia juotu");
@@ -165,6 +184,8 @@ public class StatisticsActivity extends AppCompatActivity {
 
         dataSet.setValueFormatter(new DefaultValueFormatter(0));
         BarData barData = new BarData(dataSet);
+        // Formatting the values of the chart so that only bars with values in them have numbers
+        // representing them. This is to prevent "0.0" at every spot without a bar.
         barData.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
