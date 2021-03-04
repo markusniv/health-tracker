@@ -12,16 +12,17 @@ import android.widget.TextView;
 
 import java.text.DecimalFormat;
 
-public class MovementActivity extends AppCompatActivity implements SensorEventListener {
+public class MovementActivity extends AppCompatActivity {
 
-    private TextView motionDetectionX, motionDetectionY, motionDetectionZ;
-    private SensorManager sensorManager;
-    private Sensor accelerometer;
-    private boolean sensorAvailable;
+    private TextView xAcc, yAcc, zAcc, xRot, yRot, zRot;
 
-    private String xRound;
-    private String yRound;
-    private String zRound;
+
+    private String xAccRound;
+    private String yAccRound;
+    private String zAccRound;
+    private String xRotRound;
+    private String yRotRound;
+    private String zRotRound;
 
     DecimalFormat df = new DecimalFormat("#.##");
 
@@ -31,48 +32,22 @@ public class MovementActivity extends AppCompatActivity implements SensorEventLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movement);
 
-        motionDetectionX = findViewById(R.id.motionTextX);
-        motionDetectionY = findViewById(R.id.motionTextY);
-        motionDetectionZ = findViewById(R.id.motionTextZ);
-
-        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-
-        if (sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) !=null) {
-            accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
-            sensorAvailable = true;
-        } else {
-            motionDetectionX.setText("No sensor data");
-            sensorAvailable = false;
-        }
-
-        if(sensorAvailable) {
-            sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
-        }
+        xAcc = findViewById(R.id.xAccText);
+        yAcc = findViewById(R.id.yAccText);
+        zAcc = findViewById(R.id.zAccText);
+        xRot = findViewById(R.id.xRotText);
+        yRot = findViewById(R.id.yRotText);
+        zRot = findViewById(R.id.zRotText);
 
     }
 
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-
-        xRound = df.format(event.values[0]);
-        yRound = df.format(event.values[1]);
-        zRound = df.format(event.values[2]);
-
-        motionDetectionX.setText(xRound);
-        motionDetectionY.setText(yRound);
-        motionDetectionZ.setText(zRound);
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    public void updateUI() {
 
     }
+
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(sensorAvailable) {
-            sensorManager.unregisterListener(this);
-        }
     }
 }

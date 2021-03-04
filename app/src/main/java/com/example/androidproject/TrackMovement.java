@@ -6,6 +6,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,9 +23,10 @@ public class TrackMovement extends AppCompatActivity implements SensorEventListe
     //Value for compound acceleration on all axes. Arbitrary scale.
     //Used to determine if activity is low or high intensity.
     private int accelerationRate;
-    private int rotationRate;
     //Value for compound rotation rate on all axes. Arbitrary scale.
     //Used to determine if activity is low or high intensity.
+    private int rotationRate;
+
 
     private SensorManager sensorManager;
     private Sensor accelerometer;
@@ -43,6 +45,7 @@ public class TrackMovement extends AppCompatActivity implements SensorEventListe
 
     public void track() {
         this.startSensors();
+        this.saveData();
     }
 
 
@@ -56,7 +59,7 @@ public class TrackMovement extends AppCompatActivity implements SensorEventListe
             accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER_UNCALIBRATED);
             accelerometerAvailable = true;
         } else {
-            //accelerometerError = "No accelerometer data";
+            Log.d("SENSOR","No accelerometer data");
             accelerometerAvailable = false;
         }
 
@@ -64,7 +67,7 @@ public class TrackMovement extends AppCompatActivity implements SensorEventListe
             gyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE_UNCALIBRATED);
             gyroscopeAvailable = true;
         } else {
-            //gyroscopeError = "No gyroscope data";
+            Log.d("SENSOR","No gyroscope data");
             gyroscopeAvailable = false;
         }
 
@@ -75,6 +78,16 @@ public class TrackMovement extends AppCompatActivity implements SensorEventListe
         }
     }
 
+    private void saveData() {
+
+    }
+
+    public float[] getData() {
+        float[] array = {xAcceleration, yAcceleration, zAcceleration, xRotation, yRotation, zRotation};
+        return array;
+    }
+
+    //Sensor data acquisition
     @Override
     public void onSensorChanged(SensorEvent event) {
 
@@ -97,7 +110,13 @@ public class TrackMovement extends AppCompatActivity implements SensorEventListe
 
     }
 
-    public void unregisterSensorListerers() {
-
+    //Unregistering sensor listeners when onDestroy is called in MainActivity
+    public void unregisterSensorListeners() {
+        if (accelerometerAvailable) {
+            sensorManager.unregisterListener(this, accelerometer);
+        }
+        if (gyroscopeAvailable) {
+            sensorManager.unregisterListener(this, gyroscope);
+        }
     }
 }

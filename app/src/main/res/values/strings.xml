@@ -13,4 +13,10 @@
     <string name="snuff">Nuuska</string>
     <string name="thisWeek">Tällä viikolla</string>
     <string name="thisMonth">Tässä kuussa</string>
+    <string name="xAccText">m/s²</string>
+    <string name="yAccText">m/s²</string>
+    <string name="zAccText">m/s²</string>
+    <string name="xRotText">rad/s</string>
+    <string name="yRotText">rad/s</string>
+    <string name="zRotText">rad/s</string>
 </resources>

@@ -53,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Upper buttons
         if (v == findViewById(R.id.btnActivityScreen)) {
-            // TODO: Add moving to ActivityScreenActivity
+            Intent movementActivity = new Intent(MainActivity.this, MovementActivity.class);
+            startActivity(movementActivity);
         }
         if (v == findViewById(R.id.btnStatistics)) {
             // TODO: Add moving to StatisticsActivity
@@ -246,6 +247,6 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
 
         //Unregister sensor listeners.
-        movementTracker.unregisterSensorListerers();
+        movementTracker.unregisterSensorListeners();
     }
 }
