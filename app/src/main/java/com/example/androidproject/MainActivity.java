@@ -26,15 +26,27 @@ import android.widget.TextView;
 import com.google.android.material.bottomnavigation.BottomNavigationMenu;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.lang.reflect.Array;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import static android.content.DialogInterface.BUTTON1;
 
-
+/**
+ * MainActivity, also known as the ViceActivity. Allows the user to add and remove vices from their
+ * view and shows these vices in a ScrollView.
+ */
 public class MainActivity extends AppCompatActivity {
     public static final String EXTRA = "com.example.androidproject.EXTRA";
-    final String PREFS_NAME = "PreferencesFile";
+    public static final String PREFS_NAME = "PreferencesFile";
+
+    private CharSequence[] vices = {MyApplication.getAppContext().getResources().getString(R.string.alcohol),
+            MyApplication.getAppContext().getResources().getString(R.string.tobacco),
+            MyApplication.getAppContext().getResources().getString(R.string.snuff)};
 
     private TrackMovement movementTracker;
 
@@ -83,19 +95,8 @@ public class MainActivity extends AppCompatActivity {
      */
     public void btnClick(View v) {
 
-        // Upper buttons
-        if (v == findViewById(R.id.btnActivityScreen)) {
-            // TODO: Add moving to ActivityScreenActivity
-        }
-        if (v == findViewById(R.id.btnStatistics)) {
-            Intent statistics = new Intent(MainActivity.this, StatisticsActivity.class);
-            Log.i("statistics", statistics.toString());
-            startActivity(statistics);
-        }
-
         // Alcohol buttons
         if (v == findViewById(R.id.btnAddAlcohol)) {
-            // TODO: Add moving to AlcoholAddActivity
             Log.d("Note", "Adding alcohol portion");
 
             Intent alcoholIntent = new Intent(MainActivity.this, AlcoholActivity.class);
@@ -121,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
             SharedPreferences prefGet = getSharedPreferences(PREFS_NAME, Activity.MODE_PRIVATE);
 
             builder.setTitle(R.string.viceAddDialogTitle)
-                    .setItems(EventSingleton.getEventInstance().getVices(), new DialogInterface.OnClickListener() {
+                    .setItems(vices, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
@@ -193,9 +194,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Updates the UI, removes and adds layouts as necessary depending on which vices the user has
+     * chosen to be shown.
+     */
     private void updateUI() {
         SharedPreferences prefGet = getSharedPreferences(PREFS_NAME, Activity.MODE_PRIVATE);
-
         // If launching for the first time, move to GenderChooseActivity to determine user gender
         if (prefGet.getBoolean("FIRST_USER_LAUNCH", true)) {
             Log.d("Note", "First time launched");
@@ -256,6 +260,7 @@ public class MainActivity extends AppCompatActivity {
                 ((ViewGroup) snuff.getParent()).removeView(snuff);
             }
         }
+        // If no vices are visible, set removeVice button's alpha to half and disable them
         Button removeVice = findViewById(R.id.btnRemoveVice);
         if (getViceList(prefGet).size() == 0) {
             removeVice.setAlpha(.5f);
@@ -266,6 +271,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Get a CharSequence list of all the vices currently active to determine which ones can be added
+     * and removed still
+     * @return CharSequence list of all currently active vices
+     */
     private List<CharSequence> getViceList(SharedPreferences prefGet) {
         List<CharSequence> vices = new ArrayList<>();
         if (prefGet.getBoolean("VICE_ALCOHOL_ADDED", true)) {
@@ -281,8 +291,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
+
 
         //Unregister sensor listeners.
         /*movementTracker.unregisterSensorListerers();*/
