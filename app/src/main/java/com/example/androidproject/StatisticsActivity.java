@@ -1,9 +1,13 @@
 package com.example.androidproject;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -13,6 +17,7 @@ import android.widget.RadioGroup;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -27,11 +32,19 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.lang.reflect.Array;
+import java.sql.Time;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+
+import static com.example.androidproject.MainActivity.PREFS_NAME;
 
 /**
  * An activity that shows the user their vice usage history. User can filter between a weekly and
@@ -134,37 +147,37 @@ public class StatisticsActivity extends AppCompatActivity {
 
         List<BarEntry> entries = new ArrayList<>();
         int amount = 0;
-        Calendar eventCalendar = Calendar.getInstance();
+
+        LocalDateTime eventDateTime;
+        LocalDate localTimeNow = LocalDate.now();
+        LocalDate eventTime;
 
         // Checking all the events from viceArrayList that correspond with the filtered timeframe
         switch(timeframe) {
             case "Week":
                 amount = days.size();
-                for (int i = 0; i < 12; i++) {
-                    for (int p = 0; p < amount; p++) {
-                        int viceCount = 0;
-                        for (AddVice addVice : viceArrayList) {
-                            eventCalendar.setTime(addVice.getCurrentTime());
-                            if (eventCalendar.get(Calendar.MONTH) == i && eventCalendar.get(Calendar.DAY_OF_WEEK) == p) {
-                                viceCount++;
-                            }
-                        }
-                        entries.add(new BarEntry(p, viceCount));
-                    }
-                }
-
-                break;
-            case "Year":
-                amount = months.size();
-                for (int i = 0; i < amount; i++) {
+                for (int i = 1; i < amount+1; i++) {
                     int viceCount = 0;
                     for (AddVice addVice : viceArrayList) {
-                        eventCalendar.setTime(addVice.getCurrentTime());
-                        if (eventCalendar.get(Calendar.MONTH) == i) {
+                        eventDateTime = LocalDateTime.parse(addVice.getDate());
+                        if (eventDateTime.getMonth() == LocalDateTime.now().getMonth() && eventDateTime.getDayOfWeek().getValue() == i) {
                             viceCount++;
                         }
                     }
-                    entries.add(new BarEntry(i, viceCount));
+                    entries.add(new BarEntry(i-1, viceCount));
+                }
+                break;
+            case "Year":
+                amount = months.size();
+                for (int i = 1; i < amount+1; i++) {
+                    int viceCount = 0;
+                    for (AddVice addVice : viceArrayList) {
+                        eventDateTime = LocalDateTime.parse(addVice.getDate());
+                        if (eventDateTime.getMonth().getValue() == i) {
+                            viceCount++;
+                        }
+                    }
+                    entries.add(new BarEntry(i-1, viceCount));
                 }
                 break;
         }
@@ -201,6 +214,7 @@ public class StatisticsActivity extends AppCompatActivity {
         XAxis xAxis = chart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
+
         if (timeframe.equals("Week")) {
             xAxis.setValueFormatter(new IndexAxisValueFormatter(days));
         } if (timeframe.equals("Year")){
@@ -208,9 +222,29 @@ public class StatisticsActivity extends AppCompatActivity {
         }
 
         YAxis yAxis = chart.getAxisLeft();
+        yAxis.setAxisMaximum(60);
         yAxis.setGranularity(1.0f);
         yAxis.setGranularityEnabled(true);
         yAxis.setValueFormatter(new DefaultValueFormatter(0));
+        yAxis.removeAllLimitLines();
+
+        if (type == "Alcohol") {
+            LimitLine limitLine;
+            if (timeframe.equals("Week")) {
+                int weeklyDoses = EventSingleton.getEventInstance().getDoses("Week");
+                limitLine = new LimitLine(weeklyDoses, "Riskiraja");
+            }
+            else {
+                int monthlyDoses = EventSingleton.getEventInstance().getDoses("Month");
+                limitLine = new LimitLine(monthlyDoses, "Riskiraja");
+            }
+            limitLine.setLineColor(Color.RED);
+            limitLine.setLineWidth(1f);
+            limitLine.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
+
+
+            yAxis.addLimitLine(limitLine);
+        }
         YAxis rightAxis = chart.getAxisRight();
         rightAxis.setEnabled(false);
         chart.getDescription().setEnabled(false);

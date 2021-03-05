@@ -1,5 +1,6 @@
 package com.example.androidproject;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.EventLog;
@@ -10,6 +11,8 @@ import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
+import static com.example.androidproject.MainActivity.PREFS_NAME;
 
 public class EventSingleton {
     private static final EventSingleton eventInstance = new EventSingleton();
@@ -136,14 +139,26 @@ public class EventSingleton {
      * @return
      */
     public String getAlcoholConsumption(String timeframe) {
+        SharedPreferences prefGet = MyApplication.getAppContext().getSharedPreferences(PREFS_NAME, Activity.MODE_PRIVATE);
+        String gender = prefGet.getString("GENDER_KEY", "");
+        String dosesWeekly = "";
+        String dosesMonthly = "";
+        if (gender.equals("Male")) {
+            dosesWeekly = "/14 annosta";
+            dosesMonthly = "/56 annosta";
+        }
+        else if (gender.equals("Female")) {
+            dosesWeekly = "/7 annosta";
+            dosesMonthly = "/28 annosta";
+        }
         String alcoholConsumptionString = "";
         ArrayList<AddVice> alcoholEvents = getSpecificViceEvents("Alcohol", timeframe);
         switch(timeframe) {
             case "Week":
-                alcoholConsumptionString = alcoholEvents.size() + "/5 annosta";
+                alcoholConsumptionString = alcoholEvents.size() + dosesWeekly;
                 break;
             case "Month":
-                alcoholConsumptionString = alcoholEvents.size() + "/20 annosta";
+                alcoholConsumptionString = alcoholEvents.size() + dosesMonthly;
                 break;
         }
         return alcoholConsumptionString;
@@ -214,5 +229,27 @@ public class EventSingleton {
             }
         }
         return viceEvents;
+    }
+
+    public int getDoses(String timeframe) {
+        SharedPreferences prefGet = MyApplication.getAppContext().getSharedPreferences(PREFS_NAME, Activity.MODE_PRIVATE);
+        String gender = prefGet.getString("GENDER_KEY", "Male");
+        int weeklyDoses = 0;
+        int monthlyDoses = 0;
+        switch (gender) {
+            case "Male":
+                weeklyDoses = 14;
+                monthlyDoses = 56;
+                break;
+            case "Female":
+                weeklyDoses = 7;
+                monthlyDoses = 28;
+                break;
+        }
+        if (timeframe == "Week") {
+            return weeklyDoses;
+        } else {
+            return monthlyDoses;
+        }
     }
 }

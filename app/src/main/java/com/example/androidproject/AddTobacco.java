@@ -18,7 +18,7 @@ public class AddTobacco extends AddVice {
     }
 
     public String toString() {
-        return tobaccoProduct.getName() + " " + price + " " + this.getCurrentTime();
+        return tobaccoProduct.getName() + " " + price + " " + this.getDate();
     }
 
 }
