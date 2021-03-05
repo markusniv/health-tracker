@@ -95,16 +95,6 @@ public class MainActivity extends AppCompatActivity {
      */
     public void btnClick(View v) {
 
-        // Upper buttons
-        if (v == findViewById(R.id.btnActivityScreen)) {
-            // TODO: Add moving to ActivityScreenActivity
-        }
-        if (v == findViewById(R.id.btnStatistics)) {
-            Intent statistics = new Intent(MainActivity.this, StatisticsActivity.class);
-            Log.i("statistics", statistics.toString());
-            startActivity(statistics);
-        }
-
         // Alcohol buttons
         if (v == findViewById(R.id.btnAddAlcohol)) {
             Log.d("Note", "Adding alcohol portion");
