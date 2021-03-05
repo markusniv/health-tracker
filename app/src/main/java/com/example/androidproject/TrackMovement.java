@@ -12,6 +12,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class TrackMovement extends AppCompatActivity implements SensorEventListener {
 
+    Listener mListener;
+
+    public interface Listener {
+        public void onEvent();
+    }
+
+    public void setListener(Listener listener) {
+        mListener = listener;
+    }
+
     //True if there is activity above a set dead-band.
     private boolean activity;
     //True if activity is high intensity.
@@ -45,7 +55,7 @@ public class TrackMovement extends AppCompatActivity implements SensorEventListe
 
     public void track() {
         this.startSensors();
-        this.saveData();
+        this.saveData(); //TODO call periodically
     }
 
 
@@ -103,6 +113,8 @@ public class TrackMovement extends AppCompatActivity implements SensorEventListe
             yRotation = event.values[1];
             zRotation = event.values[2];
         }
+
+        mListener.onEvent();
     }
 
     @Override

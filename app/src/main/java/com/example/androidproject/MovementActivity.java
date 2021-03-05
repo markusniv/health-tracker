@@ -12,7 +12,12 @@ import android.widget.TextView;
 
 import java.text.DecimalFormat;
 
+/**
+ * MovementActivity class
+ *
+ */
 public class MovementActivity extends AppCompatActivity {
+
 
     private TextView xAcc, yAcc, zAcc, xRot, yRot, zRot;
 
@@ -26,11 +31,23 @@ public class MovementActivity extends AppCompatActivity {
 
     DecimalFormat df = new DecimalFormat("#.##");
 
+    private float[] dynData;
+
+    TrackMovement movTrack = new TrackMovement();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movement);
+
+        movTrack.setListener(new TrackMovement.Listener() {
+            @Override
+            public void onEvent() {
+                updateDynamicUI();
+            }
+
+        });
 
         xAcc = findViewById(R.id.xAccText);
         yAcc = findViewById(R.id.yAccText);
@@ -41,8 +58,8 @@ public class MovementActivity extends AppCompatActivity {
 
     }
 
-    public void updateUI() {
-
+    public void updateDynamicUI() {
+        dynData = movTrack.getData();
     }
 
 
@@ -50,4 +67,5 @@ public class MovementActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
+
 }
