@@ -43,6 +43,8 @@ import static android.content.DialogInterface.BUTTON1;
 public class MainActivity extends AppCompatActivity {
     public static final String EXTRA = "com.example.androidproject.EXTRA";
     public static final String PREFS_NAME = "PreferencesFile";
+    public static final String EXTRA_ALCOHOL = "getInfoAlco";
+    public static final String EXTRA_TOBACCO = "getInfoTobacco";
 
     private CharSequence[] vices = {MyApplication.getAppContext().getResources().getString(R.string.alcohol),
             MyApplication.getAppContext().getResources().getString(R.string.tobacco),
@@ -104,7 +106,12 @@ public class MainActivity extends AppCompatActivity {
 
         }
         if (v == findViewById(R.id.btnDrivingAbility)) {
-            // TODO: Add moving to DrivingAbilityActivity
+            Log.d("Note", "Going to info about alcohol risks");
+
+            Intent alcoholRisks = new Intent(MainActivity.this, RisksActivity.class);
+            String alco = "Alcohol is bad";
+            alcoholRisks.putExtra(EXTRA_ALCOHOL,alco);
+            startActivity(alcoholRisks);
         }
 
         // Tobacco buttons
@@ -112,8 +119,14 @@ public class MainActivity extends AppCompatActivity {
             Intent addTobacco = new Intent(MainActivity.this, AddTobaccoActivity.class);
             startActivity(addTobacco);
         }
+
         if (v == findViewById(R.id.btnTobaccoCounter)) {
-            // TODO: Add moving to TobaccoCounterActivity
+            Log.d("Note", "Going to info about tobacco risks");
+
+            Intent tobaccoRisks = new Intent(MainActivity.this, RisksActivity.class);
+            String smoke = "Tobacco is bad";
+            tobaccoRisks.putExtra(EXTRA_TOBACCO,smoke);
+            startActivity(tobaccoRisks);
         }
 
         // Add and remove vice
