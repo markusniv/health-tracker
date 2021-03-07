@@ -43,8 +43,7 @@ import static android.content.DialogInterface.BUTTON1;
 public class MainActivity extends AppCompatActivity {
     public static final String EXTRA = "com.example.androidproject.EXTRA";
     public static final String PREFS_NAME = "PreferencesFile";
-    public static final String EXTRA_ALCOHOL = "getInfoAlco";
-    public static final String EXTRA_TOBACCO = "getInfoTobacco";
+    public static final String btnType = "ButtonType";
 
     private CharSequence[] vices = {MyApplication.getAppContext().getResources().getString(R.string.alcohol),
             MyApplication.getAppContext().getResources().getString(R.string.tobacco),
@@ -109,8 +108,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("Note", "Going to info about alcohol risks");
 
             Intent alcoholRisks = new Intent(MainActivity.this, RisksActivity.class);
-            String alco = "Alcohol is bad";
-            alcoholRisks.putExtra(EXTRA_ALCOHOL,alco);
+            alcoholRisks.putExtra(btnType,"Alcohol");
             startActivity(alcoholRisks);
         }
 
@@ -124,8 +122,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("Note", "Going to info about tobacco risks");
 
             Intent tobaccoRisks = new Intent(MainActivity.this, RisksActivity.class);
-            String smoke = "Tobacco is bad";
-            tobaccoRisks.putExtra(EXTRA_TOBACCO,smoke);
+            tobaccoRisks.putExtra(btnType, "Tobacco");
             startActivity(tobaccoRisks);
         }
 
