@@ -8,9 +8,12 @@ import android.util.Log;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.time.LocalDateTime;
+import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import static com.example.androidproject.MainActivity.PREFS_NAME;
 
@@ -47,10 +50,6 @@ public class EventSingleton {
         return viceEventList;
     }
 
-    public AddVice getViceEvent(int index) {
-        return viceEventList.get(index);
-    }
-
     public ArrayList<AddMovement> getMovementEventList() {
         return movementEventList;
     }
@@ -59,61 +58,28 @@ public class EventSingleton {
         return movementEventList.get(index);
     }
 
-    public void setViceEventList(ArrayList<AddVice> viceEventList) {
-        this.viceEventList = viceEventList;
-    }
-
-    public void setMovementEventList(ArrayList<AddMovement> movementEventList) {
-        this.movementEventList = movementEventList;
-    }
-
     /**
-     *
-     * @param vice
-     * @param timeframe
-     * @return
+     * Returns the total price of added events from a certain timeframe
+     * @param vice The type of vice we need the prices of
+     * @param timeframe The timeframe we need the prices from
+     * @return The total price of the vice from the certain timeframe, formatted to two decimals
      */
     public double getPrice(String vice, String timeframe) {
         double price = 0;
-        int currentTime = 0;
-        int eventTime = 0;
-        Calendar eventCalendar = Calendar.getInstance();
 
-        for (int i = 0; i < viceEventList.size(); i++) {
-            eventCalendar.setTime(viceEventList.get(i).getCurrentTime());
-            switch(timeframe) {
-                case "Week":
-                    currentTime = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR);
-                    eventTime = eventCalendar.get(Calendar.WEEK_OF_YEAR);
-                    break;
-                case "Month":
-                    currentTime = Calendar.getInstance().get(Calendar.MONTH);
-                    eventTime = eventCalendar.get(Calendar.MONTH);
-                    break;
-            }
-            if (currentTime == eventTime) {
-                switch(vice) {
-                    case "Tobacco":
-                        if (viceEventList.get(i) instanceof AddTobacco) {
-                            price += ((AddTobacco) viceEventList.get(i)).getPrice();
-                        }
-                        break;
-                    case "Alcohol":
-                        if (viceEventList.get(i) instanceof AddAlcohol) {
-                            price += ((AddAlcohol) viceEventList.get(i)).getPrice();
-                        }
-                        break;
-                }
-            }
+        ArrayList<AddVice> vices = getSpecificViceEvents(vice, timeframe);
+        for (AddVice viceEvent : vices) {
+            price += viceEvent.getPrice();
         }
+
         Log.i("price: ", String.valueOf(price));
         return Double.parseDouble(df.format(price));
     }
 
     /**
-     *
-     * @param timeframe
-     * @return
+     * Get the total time spent smoking tobacco from a certain timeframe
+     * @param timeframe The timeframe to check
+     * @return The amount of time spent in a String form, "x h, y min", where x is hours and y is minutes
      */
     public String getTobaccoTime(String timeframe) {
         String spentTimeString = "Menetetty aika ";
@@ -134,23 +100,16 @@ public class EventSingleton {
     }
 
     /**
-     *
-     * @param timeframe
-     * @return
+     * Get the total alcohol consumption from a certain timeframe
+     * @param timeframe The timeframe to check
+     * @return The total alcohol consumption in a String form, "x/y annosta" or "x/y annosta",
+     * where x is the total dose amount and the y is determined by the weekly and monthly limits
+     * depending on your gender, check getDoses()
      */
     public String getAlcoholConsumption(String timeframe) {
-        SharedPreferences prefGet = MyApplication.getAppContext().getSharedPreferences(PREFS_NAME, Activity.MODE_PRIVATE);
-        String gender = prefGet.getString("GENDER_KEY", "");
-        String dosesWeekly = "";
-        String dosesMonthly = "";
-        if (gender.equals("Male")) {
-            dosesWeekly = "/14 annosta";
-            dosesMonthly = "/56 annosta";
-        }
-        else if (gender.equals("Female")) {
-            dosesWeekly = "/7 annosta";
-            dosesMonthly = "/28 annosta";
-        }
+        String dosesWeekly = "/" + getDoses("Week") + " annosta";
+        String dosesMonthly = "/" + getDoses("Month") + " annosta";
+
         String alcoholConsumptionString = "";
         ArrayList<AddVice> alcoholEvents = getSpecificViceEvents("Alcohol", timeframe);
         switch(timeframe) {
@@ -165,27 +124,28 @@ public class EventSingleton {
     }
 
     /**
-     *
-     * @param vice
-     * @param timeframe
-     * @return
+     * Get specific vice events from a certain timeframe
+     * @param vice The vices that we wish to get
+     * @param timeframe The timeframe to check
+     * @return An ArrayList of all the vices of the wanted type in the wanted timeframe
      */
     public ArrayList<AddVice> getSpecificViceEvents(String vice, String timeframe) {
         ArrayList<AddVice> viceEvents = new ArrayList<>();
         int currentTime = 0;
         int eventTime = 0;
-        Calendar eventCalendar = Calendar.getInstance();
+        LocalDateTime eventDateTime;
+        WeekFields weekFields = WeekFields.of(Locale.getDefault());
 
         for (int i = 0; i < viceEventList.size(); i++) {
-            eventCalendar.setTime(viceEventList.get(i).getCurrentTime());
+            eventDateTime = LocalDateTime.parse(viceEventList.get(i).getDate());
             switch(timeframe) {
                 case "Week":
-                    currentTime = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR);
-                    eventTime = eventCalendar.get(Calendar.WEEK_OF_YEAR);
+                    currentTime = LocalDateTime.now().get(weekFields.ISO.weekOfYear());
+                    eventTime = eventDateTime.get(weekFields.ISO.weekOfYear());
                     break;
                 case "Month":
-                    currentTime = Calendar.getInstance().get(Calendar.MONTH);
-                    eventTime = eventCalendar.get(Calendar.MONTH);
+                    currentTime = LocalDateTime.now().getMonthValue();
+                    eventTime = eventDateTime.getMonthValue();
                     break;
             }
             if (currentTime == eventTime) {
@@ -207,9 +167,9 @@ public class EventSingleton {
     }
 
     /**
-     *
-     * @param vice
-     * @return
+     * Get all the specific vice events, not caring about the timeframe
+     * @param vice The vices that we wish to get
+     * @return An ArrayList of all the vices of the wanted type
      */
     public ArrayList<AddVice> getSpecificViceEvents(String vice) {
         ArrayList<AddVice> viceEvents = new ArrayList<>();
@@ -231,6 +191,12 @@ public class EventSingleton {
         return viceEvents;
     }
 
+    /**
+     * Get the risky alcohol consumption limits of the user for a certain timeframe, depending
+     * on their gender
+     * @param timeframe The timeframe to get the limits for, either "Week" or "Month"
+     * @return The risky dose amount for the timeframe
+     */
     public int getDoses(String timeframe) {
         SharedPreferences prefGet = MyApplication.getAppContext().getSharedPreferences(PREFS_NAME, Activity.MODE_PRIVATE);
         String gender = prefGet.getString("GENDER_KEY", "Male");

@@ -37,6 +37,7 @@ import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.YearMonth;
 import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -189,10 +190,10 @@ public class StatisticsActivity extends AppCompatActivity {
         // Using the given vice type to determine the label for the bar chart
         switch(type) {
             case "Alcohol":
-                dataSet = new BarDataSet(entries, "Annoksia juotu");
+                dataSet = new BarDataSet(entries, MyApplication.getAppContext().getString(R.string.alcoholDrunk));
                 break;
             case "Tobacco":
-                dataSet = new BarDataSet(entries, "Tupakoita poltettu");
+                dataSet = new BarDataSet(entries, MyApplication.getAppContext().getString(R.string.smokedCigarettes));
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + type);
@@ -235,11 +236,11 @@ public class StatisticsActivity extends AppCompatActivity {
             LimitLine limitLine;
             if (timeframe.equals("Week")) {
                 int weeklyDoses = EventSingleton.getEventInstance().getDoses("Week");
-                limitLine = new LimitLine(weeklyDoses, "Riskiraja");
+                limitLine = new LimitLine(weeklyDoses, MyApplication.getAppContext().getString(R.string.dangerZone));
             }
             else {
                 int monthlyDoses = EventSingleton.getEventInstance().getDoses("Month");
-                limitLine = new LimitLine(monthlyDoses, "Riskiraja");
+                limitLine = new LimitLine(monthlyDoses, MyApplication.getAppContext().getString(R.string.dangerZone));
             }
             limitLine.setLineColor(Color.RED);
             limitLine.setLineWidth(1f);

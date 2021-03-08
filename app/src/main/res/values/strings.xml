@@ -17,4 +17,7 @@
     <string name="vices">Paheet</string>
     <string name="movement">Hyveet</string>
     <string name="statistics">Tilastot</string>
+    <string name="dangerZone">Riskiraja</string>
+    <string name="smokedCigarettes">Tupakoita poltettu</string>
+    <string name="alcoholDrunk">Annoksia juotu</string>
 </resources>
