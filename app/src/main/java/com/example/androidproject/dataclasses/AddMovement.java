@@ -5,6 +5,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimerTask;
 
+/**
+ * Class to add movement data to EventSingleton.
+ */
 public class AddMovement {
 
     private String date;

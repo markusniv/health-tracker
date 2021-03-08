@@ -38,6 +38,7 @@ import java.util.Locale;
 
 /**
  * MovementActivity class
+ * Displays movement data and statistics.
  *
  */
 public class MovementActivity extends AppCompatActivity {
@@ -52,10 +53,7 @@ public class MovementActivity extends AppCompatActivity {
 
     TrackMovement movTrack = TrackMovement.getMovementInstance();
 
-    /**
-     *
-     * @param savedInstanceState
-     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -142,6 +140,9 @@ public class MovementActivity extends AppCompatActivity {
         updateUI();
     }
 
+    /**
+     * Updating chart view based on selected radiobutton.
+     */
     public void updateUI() {
         RadioGroup timeframeRadioGroup = findViewById(R.id.radioGroupMovement);
         RadioButton chosenTimeframe = findViewById(timeframeRadioGroup.getCheckedRadioButtonId());

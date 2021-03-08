@@ -16,7 +16,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- *
+ * This class is responsible for acquiring the sensor data from the OS and preparing it for display and saving.
  */
 public class TrackMovement extends AppCompatActivity implements SensorEventListener {
 
