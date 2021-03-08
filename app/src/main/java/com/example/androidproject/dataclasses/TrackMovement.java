@@ -41,7 +41,10 @@ public class TrackMovement extends AppCompatActivity implements SensorEventListe
     private Sensor accelerometer;
     private Sensor gyroscope;
 
-    //Listener interface to allow calling the updateUI method in MovementActivity
+    /**
+     * Listener interface to allow calling the updateUI method in MovementActivity
+     */
+
     public interface Listener {
         public void onEvent();
     }
