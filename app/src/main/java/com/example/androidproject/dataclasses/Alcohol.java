@@ -1,4 +1,4 @@
-package com.example.androidproject;
+package com.example.androidproject.dataclasses;
 
 /**
  * Data class for all alcohol drinks

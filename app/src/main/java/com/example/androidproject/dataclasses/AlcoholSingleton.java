@@ -1,4 +1,4 @@
-package com.example.androidproject;
+package com.example.androidproject.dataclasses;
 
 
 import java.util.ArrayList;

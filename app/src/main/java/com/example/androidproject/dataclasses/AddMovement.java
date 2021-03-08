@@ -1,4 +1,4 @@
-package com.example.androidproject;
+package com.example.androidproject.dataclasses;
 
 import java.time.LocalDateTime;
 import java.util.Calendar;
@@ -15,8 +15,11 @@ public class AddMovement {
         this.data = data;
     }
 
-    public String getCurrentTime() {
+    public String getDate() {
         return date;
     }
 
+    public double getData() {
+        return data;
+    }
 }

@@ -1,4 +1,4 @@
-package com.example.androidproject;
+package com.example.androidproject.dataclasses;
 
 
 import android.content.Context;
@@ -9,6 +9,8 @@ import android.hardware.SensorManager;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.androidproject.activities.MyApplication;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -47,6 +49,7 @@ public class TrackMovement extends AppCompatActivity implements SensorEventListe
 
     public TrackMovement() {
         this.mListener = null;
+        this.dataToStore = 0;
     }
 
     /**
@@ -123,18 +126,22 @@ public class TrackMovement extends AppCompatActivity implements SensorEventListe
      */
     public void collectData() {
         currentData = getData();
+        double data = 0;
         for (float f : currentData) {
-            dataToStore += (double)Math.abs(f)/1000;
-            //Log.d("COLLECTED", String.valueOf(dataToStore));
+
+            data += (double)Math.abs(f) / 1000;
+            setDataToStore(data);
+            //Log.d("COLLECTED", String.valueOf(getDataToStore()));
         }
     }
 
-    public double getDataToStore() {
-        return dataToStore;
+    public void setDataToStore(double amount) {
+        this.dataToStore = amount;
     }
 
-    public void resetData() {
-        dataToStore = 0;
+    public double getDataToStore() {
+        Log.i("Saved data", String.valueOf(this.dataToStore));
+        return this.dataToStore;
     }
 
     /**

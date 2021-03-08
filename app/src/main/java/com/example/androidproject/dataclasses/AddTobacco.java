@@ -1,4 +1,4 @@
-package com.example.androidproject;
+package com.example.androidproject.dataclasses;
 
 /**
  * Class that's used to add a tobacco smoking event from the AddTobaccoActivity into the

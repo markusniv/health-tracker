@@ -1,10 +1,10 @@
-package com.example.androidproject;
+package com.example.androidproject.dataclasses;
 
 /**
  * Class that's used to add an alcohol drink adding event from the AddAlcoholActivity into the
  * EventSingleton to keep track of all the events when alcohols were drunk.
  */
-public class AddAlcohol extends AddVice{
+public class AddAlcohol extends AddVice {
 
     private Alcohol alcohol;
 

@@ -1,21 +1,20 @@
-package com.example.androidproject;
+package com.example.androidproject.dataclasses;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
-import android.os.Build;
-import android.util.EventLog;
 import android.util.Log;
+
+import com.example.androidproject.activities.MyApplication;
+import com.example.androidproject.R;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
 import java.time.temporal.WeekFields;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
-import static com.example.androidproject.MainActivity.PREFS_NAME;
+import static com.example.androidproject.activities.MainActivity.PREFS_NAME;
 
 public class EventSingleton {
     private static final EventSingleton eventInstance = new EventSingleton();

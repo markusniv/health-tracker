@@ -1,4 +1,4 @@
-package com.example.androidproject;
+package com.example.androidproject.dataclasses;
 
 /**
  * Parent class for all tobacco products, includes their name and the nicotine amount

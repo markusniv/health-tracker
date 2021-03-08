@@ -1,18 +1,15 @@
-package com.example.androidproject;
+package com.example.androidproject.dataclasses;
 
-import android.content.Context;
 import android.util.Log;
 
-import com.opencsv.CSVReader;
+import com.example.androidproject.R;
+import com.example.androidproject.activities.MyApplication;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A singleton that creates and stores all the different Tobacco-objects the user can add into the

@@ -1,4 +1,4 @@
-package com.example.androidproject;
+package com.example.androidproject.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,14 +15,18 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.example.androidproject.dataclasses.EventSingleton;
+import com.example.androidproject.R;
+import com.example.androidproject.dataclasses.Tobacco;
+import com.example.androidproject.dataclasses.TobaccoListSingleton;
+import com.example.androidproject.dataclasses.AddTobacco;
 import com.google.gson.Gson;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
-import java.time.LocalDateTime;
 
-import static com.example.androidproject.MainActivity.PREFS_NAME;
+import static com.example.androidproject.activities.MainActivity.PREFS_NAME;
 
 /**
  * Activity in which the user chooses a tobacco they've smoked and enters its price. From this data,

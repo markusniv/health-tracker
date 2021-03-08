@@ -1,4 +1,4 @@
-package com.example.androidproject;
+package com.example.androidproject.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,12 +14,16 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.androidproject.dataclasses.AlcoholSingleton;
+import com.example.androidproject.dataclasses.EventSingleton;
+import com.example.androidproject.R;
+import com.example.androidproject.dataclasses.AddAlcohol;
+import com.example.androidproject.dataclasses.Alcohol;
 import com.google.gson.Gson;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-import static com.example.androidproject.MainActivity.PREFS_NAME;
+import static com.example.androidproject.activities.MainActivity.PREFS_NAME;
 
 /**
  * Activity in which the user chooses an alcohol type and size that was drunk and enters its price.

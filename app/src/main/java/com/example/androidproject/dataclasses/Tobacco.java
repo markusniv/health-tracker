@@ -1,4 +1,4 @@
-package com.example.androidproject;
+package com.example.androidproject.dataclasses;
 
 /**
  * Data class for all tobaccos (cigarettes). In addition to name and nicotine amount from TobaccoProduct,

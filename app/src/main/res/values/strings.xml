@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AndroidProject</string>
+    <string name="app_name">Pahepuntari</string>
     <string name="tobacco_price">Syötä hinta</string>
     <string name="viceDialogTitle">Valitse lisättävä pahe</string>
     <string name="btnAddVice">Lisää pahe</string>
@@ -12,6 +12,7 @@
     <string name="alcohol">Alkoholi</string>
     <string name="tobacco">Tupakka</string>
     <string name="snuff">Nuuska</string>
+    <string name="day">Tämä päivä</string>
     <string name="thisWeek">Tällä viikolla</string>
     <string name="thisMonth">Tässä kuussa</string>
     <string name="thisYear">Tänä vuonna</string>
@@ -27,5 +28,6 @@
     <string name="xRotText">rad/s</string>
     <string name="yRotText">rad/s</string>
     <string name="zRotText">rad/s</string>
-    <string name="buttonStartTrackingMovement">Start tracking activity</string>
+    <string name="buttonStartTrackingMovement">Aloita aktiivisuuden seuranta</string>
+    <string name="activity">Aktiivisuus</string>
 </resources>
