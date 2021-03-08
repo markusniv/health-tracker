@@ -44,10 +44,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String EXTRA = "com.example.androidproject.EXTRA";
     public static final String PREFS_NAME = "PreferencesFile";
 
-    private CharSequence[] vices = {MyApplication.getAppContext().getResources().getString(R.string.alcohol),
-            MyApplication.getAppContext().getResources().getString(R.string.tobacco),
-            MyApplication.getAppContext().getResources().getString(R.string.snuff)};
-
     private TrackMovement movementTracker;
 
     @Override
@@ -121,25 +117,42 @@ public class MainActivity extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             SharedPreferences prefGet = getSharedPreferences(PREFS_NAME, Activity.MODE_PRIVATE);
 
+            List<CharSequence> vices = getViceList(prefGet, "Add");
+            Log.i("Vices", vices.toString());
+            CharSequence[] viceCharSequences = vices.toArray(new CharSequence[vices.size()]);
+            ArrayList<Integer> selectedItems = new ArrayList();
+
             builder.setTitle(R.string.viceAddDialogTitle)
-                    .setItems(vices, new DialogInterface.OnClickListener() {
+                    .setMultiChoiceItems(viceCharSequences, null, new DialogInterface.OnMultiChoiceClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                            if (isChecked) {
+                                selectedItems.add(which);
+                            } else if (selectedItems.contains(which)) {
+                                selectedItems.remove(Integer.valueOf(which));
+                            }
+                        }
+                    })
+                    .setPositiveButton(R.string.viceAddDialogOkButton, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-
                             SharedPreferences.Editor prefEdit = prefGet.edit();
-                            switch(which) {
-                                case 0: // Alcohol
+                            for (int item : selectedItems) {
+                                if (viceCharSequences[item].toString() == getResources().getString(R.string.alcohol)) {
                                     prefEdit.putBoolean("VICE_ALCOHOL_ADDED", true);
-                                    break;
-                                case 1: // Tobacco
+                                }
+                                if (viceCharSequences[item].toString() == getResources().getString(R.string.tobacco)) {
                                     prefEdit.putBoolean("VICE_TOBACCO_ADDED", true);
-                                    break;
-                                case 2: //Snuff
-                                    prefEdit.putBoolean("VICE_SNUFF_ADDED", true);
-                                    break;
+                                }
                             }
                             prefEdit.commit();
                             updateUI();
+                        }
+                    })
+                    .setNegativeButton(R.string.viceRemoveDialogNegativeButton, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
                         }
                     });
             AlertDialog dialog = builder.create();
@@ -149,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             SharedPreferences prefGet = getSharedPreferences(PREFS_NAME, Activity.MODE_PRIVATE);
 
-            List<CharSequence> vices = getViceList(prefGet);
+            List<CharSequence> vices = getViceList(prefGet, "Remove");
             CharSequence[] viceCharSequences = vices.toArray(new CharSequence[vices.size()]);
             ArrayList<Integer> selectedItems = new ArrayList();
 
@@ -174,9 +187,6 @@ public class MainActivity extends AppCompatActivity {
                                 }
                                 if (viceCharSequences[item].toString() == getResources().getString(R.string.tobacco)) {
                                     prefEdit.putBoolean("VICE_TOBACCO_ADDED", false);
-                                }
-                                if (viceCharSequences[item].toString() == getResources().getString(R.string.snuff)) {
-                                    prefEdit.putBoolean("VICE_SNUFF_ADDED", false);
                                 }
                             }
                             prefEdit.commit();
@@ -250,19 +260,20 @@ public class MainActivity extends AppCompatActivity {
                 ((ViewGroup) tobacco.getParent()).removeView(tobacco);
             }
         }
-        if (prefGet.getBoolean("VICE_SNUFF_ADDED", true)) {
-            if (findViewById(R.id.snuffLayout) == null) {
-                LayoutInflater.from(MainActivity.this).inflate(R.layout.snuff_box_layout, findViewById(R.id.scrollViewChildLayout));
-            }
+        // If all vices have been added, set addVice button's alpha to half and disable them
+        Button removeVice = findViewById(R.id.btnRemoveVice);
+        Button addVice = findViewById(R.id.btnAddVice);
+        Log.i("Vicelist size", String.valueOf(getViceList(prefGet, "Add").size()));
+        Log.i("Vicelist length", String.valueOf(EventSingleton.getEventInstance().getVices().length));
+        if (getViceList(prefGet, "Add").size() == 0) {
+            addVice.setAlpha(.5f);
+            addVice.setClickable(false);
         } else {
-            if (findViewById(R.id.snuffLayout) != null) {
-                View snuff = findViewById(R.id.snuffLayout);
-                ((ViewGroup) snuff.getParent()).removeView(snuff);
-            }
+            addVice.setAlpha(1f);
+            addVice.setClickable(true);
         }
         // If no vices are visible, set removeVice button's alpha to half and disable them
-        Button removeVice = findViewById(R.id.btnRemoveVice);
-        if (getViceList(prefGet).size() == 0) {
+        if (getViceList(prefGet, "Remove").size() == 0) {
             removeVice.setAlpha(.5f);
             removeVice.setClickable(false);
         } else {
@@ -276,17 +287,28 @@ public class MainActivity extends AppCompatActivity {
      * and removed still
      * @return CharSequence list of all currently active vices
      */
-    private List<CharSequence> getViceList(SharedPreferences prefGet) {
+    private List<CharSequence> getViceList(SharedPreferences prefGet, String addOrRemove) {
         List<CharSequence> vices = new ArrayList<>();
-        if (prefGet.getBoolean("VICE_ALCOHOL_ADDED", true)) {
-            vices.add(getResources().getString(R.string.alcohol));
+
+        switch(addOrRemove) {
+            case "Add":
+                if (!prefGet.getBoolean("VICE_ALCOHOL_ADDED", false)) {
+                    vices.add(getResources().getString(R.string.alcohol));
+                }
+                if (!prefGet.getBoolean("VICE_TOBACCO_ADDED", false)) {
+                    vices.add(getResources().getString(R.string.tobacco));
+                }
+                break;
+            case "Remove":
+                if (prefGet.getBoolean("VICE_ALCOHOL_ADDED", true)) {
+                    vices.add(getResources().getString(R.string.alcohol));
+                }
+                if (prefGet.getBoolean("VICE_TOBACCO_ADDED", true)) {
+                    vices.add(getResources().getString(R.string.tobacco));
+                }
+                break;
         }
-        if (prefGet.getBoolean("VICE_TOBACCO_ADDED", true)) {
-            vices.add(getResources().getString(R.string.tobacco));
-        }
-        if (prefGet.getBoolean("VICE_SNUFF_ADDED", true)) {
-            vices.add(getResources().getString(R.string.snuff));
-        }
+
         return vices;
     }
 

@@ -17,7 +17,7 @@
         android:layout_marginRight="18dp"
         android:layout_marginBottom="45dp"
         android:choiceMode="singleChoice"
-        android:listSelector="@android:color/darker_gray"
+        android:listSelector="@color/y_blue"
         app:layout_constraintBottom_toTopOf="@+id/radioTobaccoType"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

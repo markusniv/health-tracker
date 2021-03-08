@@ -1,10 +1,12 @@
 package com.example.androidproject;
 
+/**
+ * Parent class for all tobacco products, includes their name and the nicotine amount
+ */
 public class TobaccoProduct extends Vice {
 
     private String name;
     private double nicotineAmount;
-    private double price;
 
     public TobaccoProduct(String name, double nicotineAmount) {
         this.name = name;
@@ -17,10 +19,6 @@ public class TobaccoProduct extends Vice {
 
     public double getNicotineAmount() {
         return nicotineAmount;
-    }
-
-    public double getPrice() {
-        return price;
     }
 
 }

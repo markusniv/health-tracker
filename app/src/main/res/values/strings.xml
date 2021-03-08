@@ -5,6 +5,7 @@
     <string name="btnAddVice">Lisää pahe</string>
     <string name="btnRemoveVice">Poista pahe</string>
     <string name="viceAddDialogTitle">Valitse lisättävä pahe</string>
+    <string name="viceAddDialogOkButton">Lisää valitut</string>
     <string name="viceRemoveDialogTitle">Valitse poistettava pahe</string>
     <string name="viceRemoveDialogOkButton">Poista valitut</string>
     <string name="viceRemoveDialogNegativeButton">Peruuta</string>

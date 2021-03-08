@@ -12,7 +12,7 @@
         android:layout_height="288dp"
         android:layout_marginTop="32dp"
         android:choiceMode="singleChoice"
-        android:listSelector="@android:color/darker_gray"
+        android:listSelector="@color/y_blue"
         app:layout_constraintBottom_toTopOf="@+id/questionIkon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

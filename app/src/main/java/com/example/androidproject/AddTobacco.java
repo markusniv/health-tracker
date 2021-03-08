@@ -1,5 +1,9 @@
 package com.example.androidproject;
 
+/**
+ * Class that's used to add a tobacco smoking event from the AddTobaccoActivity into the
+ * EventSingleton to keep track of all the events when tobacco was smoked
+ */
 public class AddTobacco extends AddVice {
     private TobaccoProduct tobaccoProduct;
 

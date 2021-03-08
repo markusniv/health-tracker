@@ -26,6 +26,9 @@ public class EventSingleton {
     private DecimalFormat df = new DecimalFormat("0.00");
     private DecimalFormatSymbols dfs = new DecimalFormatSymbols();
 
+    private CharSequence[] vices = {MyApplication.getAppContext().getResources().getString(R.string.alcohol),
+            MyApplication.getAppContext().getResources().getString(R.string.tobacco)};
+
     private EventSingleton() {
         viceEventList = new ArrayList<>();
         movementEventList = new ArrayList<>();
@@ -56,6 +59,10 @@ public class EventSingleton {
 
     public AddMovement getMovementEvent(int index) {
         return movementEventList.get(index);
+    }
+
+    public CharSequence[] getVices() {
+        return vices;
     }
 
     /**

@@ -1,5 +1,10 @@
 package com.example.androidproject;
 
+/**
+ * Data class for all tobaccos (cigarettes). In addition to name and nicotine amount from TobaccoProduct,
+ * has variables for the amount of tar and carbonmonoxide and the amount of time spent smoking one
+ */
+
 public class Tobacco extends TobaccoProduct {
 
     private double tar, carbonmonoxide;
