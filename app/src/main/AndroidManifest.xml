@@ -10,10 +10,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidProject">
-        <activity android:name=".StatisticsActivity"></activity>
-        <activity android:name=".AlcoholActivity"></activity>
-        <activity android:name=".MovementActivity"></activity>
-        <activity android:name=".AddTobaccoActivity"></activity>
+        <activity android:name=".RisksActivity"></activity>
+        <activity android:name=".StatisticsActivity" />
+        <activity android:name=".AlcoholActivity" />
+        <activity android:name=".MovementActivity" />
+        <activity android:name=".AddTobaccoActivity" />
         <activity android:name=".GenderChooseActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -23,6 +24,5 @@
             </intent-filter>
         </activity>
     </application>
-
 
 </manifest>
