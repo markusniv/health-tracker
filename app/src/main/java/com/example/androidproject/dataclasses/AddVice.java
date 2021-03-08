@@ -16,7 +16,6 @@ public class AddVice {
     private double price;
 
     public AddVice() {
-        Calendar currentCalendar = Calendar.getInstance();
         LocalDateTime now = LocalDateTime.now();
         this.date = now.toString();
     }
