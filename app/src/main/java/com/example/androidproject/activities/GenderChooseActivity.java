@@ -23,6 +23,11 @@ public class GenderChooseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_gender_choose);
     }
 
+    /**
+     * Saves the user's gender depending on the button they click, also sets chosen vice booleans to
+     * false
+     * @param v
+     */
     public void buttonClick(View v) {
 
         Bundle bundle = getIntent().getExtras();
@@ -39,7 +44,6 @@ public class GenderChooseActivity extends AppCompatActivity {
         prefEdit.putBoolean("FIRST_USER_LAUNCH", false);
         prefEdit.putBoolean("VICE_ALCOHOL_ADDED", false);
         prefEdit.putBoolean("VICE_TOBACCO_ADDED", false);
-        prefEdit.putBoolean("VICE_SNUFF_ADDED", false);
         prefEdit.commit();
         Intent backToMain = new Intent(GenderChooseActivity.this, MainActivity.class);
         startActivity(backToMain);

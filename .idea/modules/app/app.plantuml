@@ -1,0 +1,210 @@
+@startuml
+
+title __ANDROIDPROJECT.APP's Class Diagram__\n
+
+  namespace com.example.androidproject {
+    class com.example.androidproject.BuildConfig {
+    }
+  }
+  
+
+  namespace com.example.androidproject {
+    namespace activities {
+      class com.example.androidproject.activities.AddTobaccoActivity {
+      }
+    }
+  }
+  
+
+  namespace com.example.androidproject {
+    namespace activities {
+      class com.example.androidproject.activities.AlcoholActivity {
+      }
+    }
+  }
+  
+
+  namespace com.example.androidproject {
+    namespace activities {
+      class com.example.androidproject.activities.GenderChooseActivity {
+      }
+    }
+  }
+  
+
+  namespace com.example.androidproject {
+    namespace activities {
+      class com.example.androidproject.activities.MainActivity {
+      }
+    }
+  }
+  
+
+  namespace com.example.androidproject {
+    namespace activities {
+      class com.example.androidproject.activities.MovementActivity {
+      }
+    }
+  }
+  
+
+  namespace com.example.androidproject {
+    namespace activities {
+      class com.example.androidproject.activities.MyApplication {
+      }
+    }
+  }
+  
+
+  namespace com.example.androidproject {
+    namespace activities {
+      class com.example.androidproject.activities.RisksActivity {
+      }
+    }
+  }
+  
+
+  namespace com.example.androidproject {
+    namespace activities {
+      class com.example.androidproject.activities.StatisticsActivity {
+      }
+    }
+  }
+  
+
+  namespace com.example.androidproject {
+    namespace dataclasses {
+      class com.example.androidproject.dataclasses.AddAlcohol {
+      }
+    }
+  }
+  
+
+  namespace com.example.androidproject {
+    namespace dataclasses {
+      class com.example.androidproject.dataclasses.AddMovement {
+      }
+    }
+  }
+  
+
+  namespace com.example.androidproject {
+    namespace dataclasses {
+      class com.example.androidproject.dataclasses.AddMovementTimerTask {
+      }
+    }
+  }
+  
+
+  namespace com.example.androidproject {
+    namespace dataclasses {
+      class com.example.androidproject.dataclasses.AddTobacco {
+      }
+    }
+  }
+  
+
+  namespace com.example.androidproject {
+    namespace dataclasses {
+      class com.example.androidproject.dataclasses.AddVice {
+      }
+    }
+  }
+  
+
+  namespace com.example.androidproject {
+    namespace dataclasses {
+      class com.example.androidproject.dataclasses.Alcohol {
+      }
+    }
+  }
+  
+
+  namespace com.example.androidproject {
+    namespace dataclasses {
+      class com.example.androidproject.dataclasses.AlcoholSingleton {
+      }
+    }
+  }
+  
+
+  namespace com.example.androidproject {
+    namespace dataclasses {
+      class com.example.androidproject.dataclasses.EventSingleton {
+      }
+    }
+  }
+  
+
+  namespace com.example.androidproject {
+    namespace dataclasses {
+      class com.example.androidproject.dataclasses.Tobacco {
+      }
+    }
+  }
+  
+
+  namespace com.example.androidproject {
+    namespace dataclasses {
+      class com.example.androidproject.dataclasses.TobaccoListSingleton {
+      }
+    }
+  }
+  
+
+  namespace com.example.androidproject {
+    namespace dataclasses {
+      class com.example.androidproject.dataclasses.TobaccoProduct {
+      }
+    }
+  }
+  
+
+  namespace com.example.androidproject {
+    namespace dataclasses {
+      class com.example.androidproject.dataclasses.TrackMovement {
+      }
+    }
+  }
+  
+
+  namespace com.example.androidproject {
+    namespace dataclasses {
+      class com.example.androidproject.dataclasses.Vice {
+      }
+    }
+  }
+  
+
+  com.example.androidproject.activities.AddTobaccoActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.androidproject.activities.AddTobaccoActivity o-- com.example.androidproject.dataclasses.Tobacco : tobacco
+  com.example.androidproject.activities.AlcoholActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.androidproject.activities.AlcoholActivity o-- com.example.androidproject.dataclasses.Alcohol : alcohol
+  com.example.androidproject.activities.GenderChooseActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.androidproject.activities.MainActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.androidproject.activities.MovementActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.androidproject.activities.MovementActivity o-- com.example.androidproject.dataclasses.TrackMovement : movTrack
+  com.example.androidproject.activities.MyApplication -up-|> android.app.Application
+  com.example.androidproject.activities.RisksActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.androidproject.activities.StatisticsActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.androidproject.dataclasses.AddAlcohol -up-|> com.example.androidproject.dataclasses.AddVice
+  com.example.androidproject.dataclasses.AddAlcohol o-- com.example.androidproject.dataclasses.Alcohol : alcohol
+  com.example.androidproject.dataclasses.AddMovementTimerTask -up-|> java.util.TimerTask
+  com.example.androidproject.dataclasses.AddTobacco -up-|> com.example.androidproject.dataclasses.AddVice
+  com.example.androidproject.dataclasses.AddTobacco o-- com.example.androidproject.dataclasses.TobaccoProduct : tobaccoProduct
+  com.example.androidproject.dataclasses.Alcohol -up-|> com.example.androidproject.dataclasses.Vice
+  com.example.androidproject.dataclasses.Tobacco -up-|> com.example.androidproject.dataclasses.TobaccoProduct
+  com.example.androidproject.dataclasses.TobaccoProduct -up-|> com.example.androidproject.dataclasses.Vice
+  com.example.androidproject.dataclasses.TrackMovement .up.|> android.hardware.SensorEventListener
+  com.example.androidproject.dataclasses.TrackMovement -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.androidproject.dataclasses.TrackMovement o-- com.example.androidproject.dataclasses.TrackMovement.Listener : mListener
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

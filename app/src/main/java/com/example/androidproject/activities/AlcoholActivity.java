@@ -59,6 +59,10 @@ public class AlcoholActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Creates a new AddAlcohol-object when clicking the add button using the input the user has made
+     * @param v The Add-button
+     */
     public void onClick(View v)     {
         EditText alcoholPriceField = findViewById(R.id.priceField);
         String alcoholPriceString = alcoholPriceField.getText().toString();

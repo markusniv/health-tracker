@@ -64,6 +64,10 @@ public class AddTobaccoActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Creates a new AddTobacco-object when clicking the add button using the input the user has made
+     * @param v The Add-button
+     */
     public void onClick(View v) {
         EditText tobaccoPriceField = findViewById(R.id.editTobaccoPrice);
         String tobaccoPriceString = tobaccoPriceField.getText().toString();
