@@ -8,71 +8,87 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
 
-public class MovementActivity extends AppCompatActivity implements SensorEventListener {
+/**
+ * MovementActivity class
+ *
+ */
+public class MovementActivity extends AppCompatActivity {
 
-    private TextView motionDetectionX, motionDetectionY, motionDetectionZ;
-    private SensorManager sensorManager;
-    private Sensor accelerometer;
-    private boolean sensorAvailable;
+    private TextView xAcc, yAcc, zAcc, xRot, yRot, zRot;
 
-    private String xRound;
-    private String yRound;
-    private String zRound;
-
+    //For formatting raw sensor data.
     DecimalFormat df = new DecimalFormat("#.##");
 
+    //Array for raw sensor data.
+    private float[] dynData;
 
+    TrackMovement movTrack = new TrackMovement(this);
+
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*setContentView(R.layout.activity_movement);
+        setContentView(R.layout.activity_movement);
 
-        motionDetectionX = findViewById(R.id.motionTextX);
-        motionDetectionY = findViewById(R.id.motionTextY);
-        motionDetectionZ = findViewById(R.id.motionTextZ);*/
+        movTrack.setListener(new TrackMovement.Listener() {
+            /**
+             *Triggers data fetch and realtime UI update when new sensor data is available from TrackMovement.
+             */
+            @Override
+            public void onEvent() {
+                updateDynamicUI();
+                movTrack.collectData();
+            }
 
-        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        });
 
-        if (sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) !=null) {
-            accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
-            sensorAvailable = true;
-        } else {
-            motionDetectionX.setText("No sensor data");
-            sensorAvailable = false;
-        }
-
-        if(sensorAvailable) {
-            sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
-        }
-
-    }
-
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-
-        xRound = df.format(event.values[0]);
-        yRound = df.format(event.values[1]);
-        zRound = df.format(event.values[2]);
-
-        motionDetectionX.setText(xRound);
-        motionDetectionY.setText(yRound);
-        motionDetectionZ.setText(zRound);
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        xAcc = findViewById(R.id.xAccText);
+        yAcc = findViewById(R.id.yAccText);
+        zAcc = findViewById(R.id.zAccText);
+        xRot = findViewById(R.id.xRotText);
+        yRot = findViewById(R.id.yRotText);
+        zRot = findViewById(R.id.zRotText);
 
     }
 
+    /**
+     * Activating movement tracking on button press.
+     * @param v
+     */
+    public void onTrackBtnClick(View v) {
+        movTrack.track();
+        findViewById(R.id.buttonStartTrackingMovement).setEnabled(false);
+    }
+
+    /**
+     * Get sensor data from TrackMovement and update display
+     */
+    public void updateDynamicUI() {
+        dynData = movTrack.getData();
+        xAcc.setText("X: " + df.format(dynData[0]) + " m/s²");
+        yAcc.setText("Y: " + df.format(dynData[1]) + " m/s²");
+        zAcc.setText("Z: " + df.format(dynData[2]) + " m/s²");
+        xRot.setText("X: " + df.format(dynData[3]) + " rad/s");
+        yRot.setText("Y: " + df.format(dynData[4]) + " rad/s");
+        zRot.setText("Z: " + df.format(dynData[5]) + " rad/s");
+    }
+
+    /**
+     * Call to unregister sensor listeners.
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(sensorAvailable) {
-            sensorManager.unregisterListener(this);
-        }
+
+        movTrack.unregisterSensorListeners();
     }
+
 }
