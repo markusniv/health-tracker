@@ -12,6 +12,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.example.androidproject.R;
+import com.example.androidproject.dataclasses.AddMovementTimerTask;
 import com.example.androidproject.dataclasses.TrackMovement;
 import com.example.androidproject.dataclasses.AddMovement;
 import com.example.androidproject.dataclasses.EventSingleton;
@@ -26,6 +27,7 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.temporal.WeekFields;
@@ -140,7 +142,7 @@ public class MovementActivity extends AppCompatActivity {
         updateUI();
     }
 
-    private void updateUI() {
+    public void updateUI() {
         RadioGroup timeframeRadioGroup = findViewById(R.id.radioGroupMovement);
         RadioButton chosenTimeframe = findViewById(timeframeRadioGroup.getCheckedRadioButtonId());
 
@@ -175,32 +177,36 @@ public class MovementActivity extends AppCompatActivity {
         LocalDateTime eventDateTime;
         WeekFields weekFields = WeekFields.of(Locale.getDefault());
         ArrayList<AddMovement> movementList = EventSingleton.getEventInstance().getMovementEventList();
+        ArrayList<AddMovement> copiedMovements = new ArrayList<>(movementList);
 
-        // Checking all the events from viceArrayList that correspond with the filtered timeframe
+        // Checking all the events from movementArrayList that correspond with the filtered timeframe
         switch(timeframe) {
             case "Week":
                 amount = days.size();
                 for (int i = 1; i < amount+1; i++) {
                     int movementCount = 0;
-                    for (AddMovement addMovement : movementList) {
+                    activity = 0;
+                    for (AddMovement addMovement : copiedMovements) {
                         eventDateTime = LocalDateTime.parse(addMovement.getDate());
                         int eventWeekNumber = eventDateTime.get(weekFields.ISO.weekOfMonth());
                         int currentWeekNumber = LocalDateTime.now().get(weekFields.ISO.weekOfMonth());
                         if (eventDateTime.getMonth() == LocalDateTime.now().getMonth() && eventWeekNumber == currentWeekNumber && eventDateTime.getDayOfWeek().getValue() == i) {
-                            movementCount++;
+                            activity += addMovement.getData();
                         }
                     }
-                    entries.add(new BarEntry(i-1, movementCount));
+                    entries.add(new BarEntry(i-1, (float) activity));
                 }
                 break;
             case "Day":
                 amount = 23;
                 for (int i = 0; i < amount; i++) {
-                    for (AddMovement addMovement : movementList) {
-                        eventDateTime = LocalDateTime.parse(addMovement.getDate());
-                        activity = 0;
-                        if (eventDateTime.getHour() == i) {
-                            activity += addMovement.getData();
+                    activity = 0;
+                    if (!AddMovementTimerTask.running) {
+                        for (AddMovement addMovement : copiedMovements) {
+                            eventDateTime = LocalDateTime.parse(addMovement.getDate());
+                            if (eventDateTime.getHour() == i) {
+                                activity += addMovement.getData();
+                            }
                         }
                     }
                     entries.add(new BarEntry(i, (float) activity));

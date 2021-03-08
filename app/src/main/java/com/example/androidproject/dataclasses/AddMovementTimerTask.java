@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.example.androidproject.activities.MovementActivity;
 import com.example.androidproject.activities.MyApplication;
 import com.google.gson.Gson;
 
@@ -13,10 +14,13 @@ import java.util.TimerTask;
 import static com.example.androidproject.activities.MainActivity.PREFS_NAME;
 
 public class AddMovementTimerTask extends TimerTask {
+    public static boolean running = false;
     @Override
     public void run() {
-        Log.i("Movement data", String.valueOf(TrackMovement.getMovementInstance().getDataToStore()));
-        AddMovement movement = new AddMovement(TrackMovement.getMovementInstance().getDataToStore());
+        running = true;
+
+        double data = TrackMovement.getMovementInstance().getDataToStore();
+        AddMovement movement = new AddMovement(data);
 
         EventSingleton.getEventInstance().AddMovementEvent(movement);
         TrackMovement.getMovementInstance().setDataToStore(0);
@@ -33,8 +37,7 @@ public class AddMovementTimerTask extends TimerTask {
         prefEdit.putString("EVENT_SINGLETON_MOVEMENT" , movementEventJson);
         prefEdit.commit();
 
-
-        Log.i("MOVEMENT EVENTS", EventSingleton.getEventInstance().getMovementEventList().toString());
+        running = false;
     }
 
 }

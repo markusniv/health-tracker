@@ -129,7 +129,7 @@ public class TrackMovement extends AppCompatActivity implements SensorEventListe
         double data = 0;
         for (float f : currentData) {
 
-            data += (double)Math.abs(f) / 1000;
+            data += (double)Math.abs(f) / 100;
             setDataToStore(data);
             //Log.d("COLLECTED", String.valueOf(getDataToStore()));
         }
@@ -149,7 +149,7 @@ public class TrackMovement extends AppCompatActivity implements SensorEventListe
      */
     private void saveData() {
         TimerTask movementEvent = new AddMovementTimerTask();
-        timer.scheduleAtFixedRate(movementEvent, 100, 6000);
+        timer.scheduleAtFixedRate(movementEvent, 10000, 10000);
     }
 
     /**
