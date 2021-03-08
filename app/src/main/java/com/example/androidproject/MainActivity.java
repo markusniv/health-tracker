@@ -6,10 +6,12 @@ import androidx.fragment.app.FragmentManager;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.EventLog;
@@ -30,7 +32,9 @@ public class MainActivity extends AppCompatActivity {
     public static final String EXTRA = "com.example.androidproject.EXTRA";
     final String PREFS_NAME = "PreferencesFile";
 
-    private TrackMovement movementTracker;
+    //private TrackMovement movementTracker;
+
+    //private SensorManager sensorManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +43,10 @@ public class MainActivity extends AppCompatActivity {
 
         updateUI();
 
-        //Create instance of TrackMovement.
-        movementTracker = new TrackMovement();
-        //Start tracking user activity.
-        movementTracker.track();
+        //sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+
+        //movementTracker = new TrackMovement();
+        //movementTracker.track();
     }
 
     /**
@@ -55,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         if (v == findViewById(R.id.btnActivityScreen)) {
             Intent movementActivity = new Intent(MainActivity.this, MovementActivity.class);
             startActivity(movementActivity);
+            //Log.d("DEBUG", "ActivityScreen button pressed");
         }
         if (v == findViewById(R.id.btnStatistics)) {
             // TODO: Add moving to StatisticsActivity
@@ -246,7 +251,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        //Unregister sensor listeners.
-        movementTracker.unregisterSensorListeners();
+        //movementTracker.unregisterSensorListeners();
     }
 }

@@ -19,4 +19,5 @@
     <string name="xRotText">rad/s</string>
     <string name="yRotText">rad/s</string>
     <string name="zRotText">rad/s</string>
+    <string name="buttonStartTrackingMovement">Start tracking activity</string>
 </resources>

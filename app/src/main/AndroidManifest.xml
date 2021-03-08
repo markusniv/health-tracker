@@ -10,7 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidProject">
-        <activity android:name=".MovementActivity"></activity>
+        <activity android:name=".MovementActivity" />
         <activity android:name=".AddTobaccoActivity" />
         <activity android:name=".GenderChooseActivity" />
         <activity android:name=".MainActivity">
