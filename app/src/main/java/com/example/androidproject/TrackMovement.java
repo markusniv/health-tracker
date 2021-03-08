@@ -10,10 +10,19 @@ import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  *
  */
 public class TrackMovement extends AppCompatActivity implements SensorEventListener {
+
+    private static final TrackMovement movementInstance = new TrackMovement(MyApplication.getAppContext());
+
+    public static TrackMovement getMovementInstance() {
+        return movementInstance;
+    }
 
     Context mContext;
 
@@ -60,6 +69,8 @@ public class TrackMovement extends AppCompatActivity implements SensorEventListe
 
     private float[] currentData;
     private double dataToStore;
+
+    Timer timer = new Timer();
 
     /**
      * Called from MovementActivity to start sensor service and to start collecting and saving data.
@@ -118,11 +129,20 @@ public class TrackMovement extends AppCompatActivity implements SensorEventListe
         }
     }
 
+    public double getDataToStore() {
+        return dataToStore;
+    }
+
+    public void resetData() {
+        dataToStore = 0;
+    }
+
     /**
-     *
+     * Periodically save collected activity data to EventSingleton with timestamps.
      */
     private void saveData() {
-
+        TimerTask movementEvent = new AddMovementTimerTask();
+        timer.scheduleAtFixedRate(movementEvent, 100, 6000);
     }
 
     /**

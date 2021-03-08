@@ -27,7 +27,7 @@ public class MovementActivity extends AppCompatActivity {
     //Array for raw sensor data.
     private float[] dynData;
 
-    TrackMovement movTrack = new TrackMovement(this);
+    TrackMovement movTrack = TrackMovement.getMovementInstance();
 
     /**
      *
@@ -82,7 +82,7 @@ public class MovementActivity extends AppCompatActivity {
     }
 
     /**
-     * Call to unregister sensor listeners.
+     * Method call to TrackMovement to unregister sensor listeners on destroy.
      */
     @Override
     protected void onDestroy() {
