@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * MainActivity, also known as the ViceActivity. Allows the user to add and remove vices from their
+ * MainActivity, also known as the ViceActivity, allows the user to add and remove vices from their
  * view and shows these vices in a ScrollView.
  */
 

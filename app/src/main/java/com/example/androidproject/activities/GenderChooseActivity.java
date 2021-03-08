@@ -11,7 +11,7 @@ import android.view.View;
 import com.example.androidproject.R;
 
 /**
- * Activity that is ran the first time user launches the app. Lets the user pick their gender
+ * Activity that is ran the first time user launches the app, lets the user pick their gender
  * which is then used for the calculations the app does.
  */
 

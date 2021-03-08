@@ -202,12 +202,10 @@ public class MovementActivity extends AppCompatActivity {
                 amount = 23;
                 for (int i = 0; i < amount; i++) {
                     activity = 0;
-                    if (!AddMovementTimerTask.running) {
-                        for (AddMovement addMovement : copiedMovements) {
-                            eventDateTime = LocalDateTime.parse(addMovement.getDate());
-                            if (eventDateTime.getHour() == i) {
-                                activity += addMovement.getData();
-                            }
+                    for (AddMovement addMovement : copiedMovements) {
+                        eventDateTime = LocalDateTime.parse(addMovement.getDate());
+                        if (eventDateTime.getHour() == i) {
+                            activity += addMovement.getData();
                         }
                     }
                     entries.add(new BarEntry(i, (float) activity));
