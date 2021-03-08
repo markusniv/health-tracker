@@ -6,29 +6,57 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
+/**
+ *
+ */
 public class TrackMovement extends AppCompatActivity implements SensorEventListener {
 
-    //True if there is activity above a set dead-band.
-    private boolean activity;
-    //True if activity is high intensity.
-    private boolean highActivity;
-    //True if there is acceleration above a set dead-band.
-    private boolean acceleration;
-    //True if there is rotation above a set dead-band.
-    private boolean rotation;
-    //Value for compound acceleration on all axes. Arbitrary scale.
-    //Used to determine if activity is low or high intensity.
-    private int accelerationRate;
-    private int rotationRate;
-    //Value for compound rotation rate on all axes. Arbitrary scale.
-    //Used to determine if activity is low or high intensity.
+    private static final TrackMovement movementInstance = new TrackMovement(MyApplication.getAppContext());
+
+    public static TrackMovement getMovementInstance() {
+        return movementInstance;
+    }
+
+    Context mContext;
+
+    /**
+     * Association to MovementActivity.
+     * @param mContext activity context
+     */
+    public TrackMovement(Context mContext) {
+        this.mContext = mContext;
+    }
 
     private SensorManager sensorManager;
     private Sensor accelerometer;
     private Sensor gyroscope;
+
+    //Listener interface to allow calling the updateUI method in MovementActivity
+    public interface Listener {
+        public void onEvent();
+    }
+
+    private Listener mListener;
+
+    public TrackMovement() {
+        this.mListener = null;
+    }
+
+    /**
+     * Listener for getting data to updateUI method in MovementActivity.
+     * @param mListener listening for sensor events.
+     */
+    public void setListener(Listener mListener) {
+        this.mListener = mListener;
+    }
+
     private boolean accelerometerAvailable;
     private boolean gyroscopeAvailable;
 
@@ -39,65 +67,137 @@ public class TrackMovement extends AppCompatActivity implements SensorEventListe
     private float yRotation;
     private float zRotation;
 
+    private float[] currentData;
+    private double dataToStore;
 
+    Timer timer = new Timer();
 
+    /**
+     * Called from MovementActivity to start sensor service and to start collecting and saving data.
+     */
     public void track() {
         this.startSensors();
+        this.saveData();
     }
 
-
+    /**
+     * Starting sensor services.
+     * Checking sensor availability.
+     * Initializing relevant sensors.
+     * Registering sensor listeners.
+     */
     //Initialize sensors and their listeners
     private void startSensors() {
         //Instantiate Android SensorManager.
-        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        sensorManager = (SensorManager) mContext.getSystemService(Context.SENSOR_SERVICE);
 
         //Check if sensors are available.
-        if (sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER_UNCALIBRATED) !=null) {
-            accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER_UNCALIBRATED);
+        if (sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION) !=null) {
+            accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
             accelerometerAvailable = true;
         } else {
-            //accelerometerError = "No accelerometer data";
+            Log.d("SENSOR","No accelerometer data");
             accelerometerAvailable = false;
         }
 
-        if (sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE_UNCALIBRATED) !=null) {
-            gyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE_UNCALIBRATED);
+        if (sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE) !=null) {
+            gyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
             gyroscopeAvailable = true;
         } else {
-            //gyroscopeError = "No gyroscope data";
+            Log.d("SENSOR","No gyroscope data");
             gyroscopeAvailable = false;
         }
 
         //Activate sensor event listeners if sensors are available.
-        if (accelerometerAvailable && gyroscopeAvailable) {
+        if (accelerometerAvailable) {
             sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        }
+
+        if (gyroscopeAvailable) {
             sensorManager.registerListener(this, gyroscope, SensorManager.SENSOR_DELAY_NORMAL);
         }
     }
 
+    /**
+     * Collect raw sensor data in preparation for periodic saving and format it to make it smaller.
+     */
+    public void collectData() {
+        currentData = getData();
+        for (float f : currentData) {
+            dataToStore += (double)Math.abs(f)/1000;
+            //Log.d("COLLECTED", String.valueOf(dataToStore));
+        }
+    }
+
+    public double getDataToStore() {
+        return dataToStore;
+    }
+
+    public void resetData() {
+        dataToStore = 0;
+    }
+
+    /**
+     * Periodically save collected activity data to EventSingleton with timestamps.
+     */
+    private void saveData() {
+        TimerTask movementEvent = new AddMovementTimerTask();
+        timer.scheduleAtFixedRate(movementEvent, 100, 6000);
+    }
+
+    /**
+     * Get current sensor data.
+     * @return current sensor data in a float array.
+     */
+    public float[] getData() {
+        float[] array = {xAcceleration, yAcceleration, zAcceleration, xRotation, yRotation, zRotation};
+        return array;
+    }
+
+    /**
+     * Sensor data acquisition.
+     * @param event Invoking event listener when new sensor data is available.
+     */
     @Override
     public void onSensorChanged(SensorEvent event) {
 
-        Sensor activeSensor = event.sensor;
-
-        if (activeSensor.getType() == Sensor.TYPE_ACCELEROMETER_UNCALIBRATED) {
+        if (event.sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION) {
             xAcceleration = event.values[0];
             yAcceleration = event.values[1];
             zAcceleration = event.values[2];
         }
-        if (activeSensor.getType() == Sensor.TYPE_GYROSCOPE_UNCALIBRATED) {
+        if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
             xRotation = event.values[0];
             yRotation = event.values[1];
             zRotation = event.values[2];
         }
+
+        if (mListener != null) {
+            mListener.onEvent();
+        }
+
     }
 
+    /**
+     * Default sensor service method. Not used.
+     * @param sensor
+     * @param accuracy
+     */
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
 
-    public void unregisterSensorListerers() {
 
+    /**
+     * Unregistering sensor listeners when onDestroy is called in MovementActivity
+     */
+    public void unregisterSensorListeners() {
+        if (accelerometerAvailable) {
+            sensorManager.unregisterListener(this, accelerometer);
+        }
+        if (gyroscopeAvailable) {
+            sensorManager.unregisterListener(this, gyroscope);
+        }
     }
 }

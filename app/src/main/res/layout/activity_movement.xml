@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MovementActivity">
+
+    <TextView
+        android:id="@+id/yAccText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginRight="22dp"
+        android:text="@string/yAccText"
+        app:layout_constraintEnd_toStartOf="@+id/yRotText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/xAccText" />
+
+    <TextView
+        android:id="@+id/yRotText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:text="@string/yRotText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/yAccText"
+        app:layout_constraintTop_toBottomOf="@+id/xRotText" />
+
+    <TextView
+        android:id="@+id/xRotText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:text="@string/xRotText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/xAccText"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/zRotText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:text="@string/zRotText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/zAccText"
+        app:layout_constraintTop_toBottomOf="@+id/yRotText" />
+
+    <TextView
+        android:id="@+id/zAccText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginRight="22dp"
+        android:text="@string/zAccText"
+        app:layout_constraintEnd_toStartOf="@+id/zRotText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/yAccText" />
+
+    <TextView
+        android:id="@+id/xAccText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="23dp"
+        android:layout_marginRight="23dp"
+        android:text="@string/xAccText"
+        app:layout_constraintEnd_toStartOf="@+id/xRotText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonStartTrackingMovement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:onClick="onTrackBtnClick"
+        android:text="@string/buttonStartTrackingMovement"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/zAccText" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

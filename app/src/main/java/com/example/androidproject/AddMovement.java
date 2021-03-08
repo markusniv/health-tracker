@@ -1,19 +1,22 @@
 package com.example.androidproject;
 
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimerTask;
 
 public class AddMovement {
 
-    private Date currentTime;
-    // TODO: Add Movement-object as parameter once it's finished
+    private String date;
+    private double data;
 
-    public AddMovement() {
-        currentTime = Calendar.getInstance().getTime();
+    public AddMovement(double data) {
+        date = LocalDateTime.now().toString();
+        this.data = data;
     }
 
-    public Date getCurrentTime() {
-        return currentTime;
+    public String getCurrentTime() {
+        return date;
     }
 
 }

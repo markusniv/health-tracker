@@ -7,13 +7,36 @@
     android:background="@color/magnolia"
     tools:context=".MainActivity">
 
+    <ImageButton
+        android:id="@+id/btnActivityScreen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="9dp"
+        android:layout_marginRight="9dp"
+        android:onClick="btnClick"
+        app:layout_constraintEnd_toStartOf="@+id/btnStatistics"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/btn_star" />
+
+    <ImageButton
+        android:id="@+id/btnStatistics"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_more" />
+
     <ScrollView
         android:id="@+id/scrollViewViceList"
         android:layout_width="380dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="48dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="24dp"
@@ -22,7 +45,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.466"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/btnActivityScreen"
+        app:layout_constraintVertical_bias="0.855">
 
         <LinearLayout
             android:id="@+id/scrollViewChildLayout"
@@ -42,10 +66,9 @@
         android:layout_marginLeft="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="92dp"
+        android:layout_marginBottom="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
@@ -86,14 +109,20 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
-        android:layout_width="match_parent"
-        android:layout_height="75dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginRight="64dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/scrollViewViceList"
+        app:layout_constraintEnd_toStartOf="@+id/btnActivityScreen"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_navigation_menu"/>
+        app:layout_constraintTop_toTopOf="@+id/btnActivityScreen"
+        app:srcCompat="@drawable/image_logo" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
