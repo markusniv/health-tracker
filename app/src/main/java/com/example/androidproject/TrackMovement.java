@@ -16,6 +16,11 @@ import androidx.appcompat.app.AppCompatActivity;
 public class TrackMovement extends AppCompatActivity implements SensorEventListener {
 
     Context mContext;
+
+    /**
+     * Association to MovementActivity.
+     * @param mContext activity context
+     */
     public TrackMovement(Context mContext) {
         this.mContext = mContext;
     }
@@ -36,8 +41,8 @@ public class TrackMovement extends AppCompatActivity implements SensorEventListe
     }
 
     /**
-     * Listener to get access to updateUI method in MovementActivity
-     * @param mListener
+     * Listener for getting data to updateUI method in MovementActivity.
+     * @param mListener listening for sensor events.
      */
     public void setListener(Listener mListener) {
         this.mListener = mListener;
@@ -53,12 +58,15 @@ public class TrackMovement extends AppCompatActivity implements SensorEventListe
     private float yRotation;
     private float zRotation;
 
+    private float[] currentData;
+    private double dataToStore;
+
     /**
-     *
+     * Called from MovementActivity to start sensor service and to start collecting and saving data.
      */
     public void track() {
         this.startSensors();
-        this.saveData(); //TODO call periodically
+        this.saveData();
     }
 
     /**
@@ -100,6 +108,17 @@ public class TrackMovement extends AppCompatActivity implements SensorEventListe
     }
 
     /**
+     * Collect raw sensor data in preparation for periodic saving and format it to make it smaller.
+     */
+    public void collectData() {
+        currentData = getData();
+        for (float f : currentData) {
+            dataToStore += (double)Math.abs(f)/1000;
+            //Log.d("COLLECTED", String.valueOf(dataToStore));
+        }
+    }
+
+    /**
      *
      */
     private void saveData() {
@@ -107,8 +126,8 @@ public class TrackMovement extends AppCompatActivity implements SensorEventListe
     }
 
     /**
-     * Return current sensor data in a float array.
-     * @return
+     * Get current sensor data.
+     * @return current sensor data in a float array.
      */
     public float[] getData() {
         float[] array = {xAcceleration, yAcceleration, zAcceleration, xRotation, yRotation, zRotation};
@@ -117,8 +136,7 @@ public class TrackMovement extends AppCompatActivity implements SensorEventListe
 
     /**
      * Sensor data acquisition.
-     * Invoking event listener when new sensor data is available.
-     * @param event
+     * @param event Invoking event listener when new sensor data is available.
      */
     @Override
     public void onSensorChanged(SensorEvent event) {

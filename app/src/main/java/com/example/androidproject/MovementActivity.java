@@ -45,6 +45,7 @@ public class MovementActivity extends AppCompatActivity {
             @Override
             public void onEvent() {
                 updateDynamicUI();
+                movTrack.collectData();
             }
 
         });

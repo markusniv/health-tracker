@@ -32,9 +32,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String EXTRA = "com.example.androidproject.EXTRA";
     final String PREFS_NAME = "PreferencesFile";
 
-    //private TrackMovement movementTracker;
-
-    //private SensorManager sensorManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +39,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         updateUI();
-
-        //sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-
-        //movementTracker = new TrackMovement();
-        //movementTracker.track();
     }
 
     /**
@@ -59,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         if (v == findViewById(R.id.btnActivityScreen)) {
             Intent movementActivity = new Intent(MainActivity.this, MovementActivity.class);
             startActivity(movementActivity);
-            //Log.d("DEBUG", "ActivityScreen button pressed");
+
         }
         if (v == findViewById(R.id.btnStatistics)) {
             // TODO: Add moving to StatisticsActivity
