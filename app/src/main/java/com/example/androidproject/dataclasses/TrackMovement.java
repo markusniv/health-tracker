@@ -34,6 +34,7 @@ public class TrackMovement extends AppCompatActivity implements SensorEventListe
      */
     public TrackMovement(Context mContext) {
         this.mContext = mContext;
+        this.dataToStore = 0;
     }
 
     private SensorManager sensorManager;
@@ -49,7 +50,6 @@ public class TrackMovement extends AppCompatActivity implements SensorEventListe
 
     public TrackMovement() {
         this.mListener = null;
-        this.dataToStore = 0;
     }
 
     /**

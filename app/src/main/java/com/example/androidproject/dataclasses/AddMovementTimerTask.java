@@ -13,11 +13,14 @@ import java.util.TimerTask;
 
 import static com.example.androidproject.activities.MainActivity.PREFS_NAME;
 
+/**
+ * A class that implements TimerTask to allow periodic saving of movement data in the form of
+ * AddMovement-objects. The objects are added into the EventSingleton's AddMovement ArrayList, as
+ * well as saved into the SharedPreferences
+ */
 public class AddMovementTimerTask extends TimerTask {
-    public static boolean running = false;
     @Override
     public void run() {
-        running = true;
 
         double data = TrackMovement.getMovementInstance().getDataToStore();
         AddMovement movement = new AddMovement(data);
@@ -37,7 +40,6 @@ public class AddMovementTimerTask extends TimerTask {
         prefEdit.putString("EVENT_SINGLETON_MOVEMENT" , movementEventJson);
         prefEdit.commit();
 
-        running = false;
     }
 
 }
