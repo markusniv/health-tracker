@@ -1,0 +1,239 @@
+@startuml
+
+title __DATACLASSES's Class Diagram__\n
+
+  namespace com.example.androidproject {
+    namespace dataclasses {
+      class com.example.androidproject.dataclasses.AddAlcohol {
+          + AddAlcohol()
+          + getAlcohol()
+      }
+    }
+  }
+  
+
+  namespace com.example.androidproject {
+    namespace dataclasses {
+      class com.example.androidproject.dataclasses.AddMovement {
+          - data : double
+          - date : String
+          + AddMovement()
+          + getData()
+          + getDate()
+      }
+    }
+  }
+  
+
+  namespace com.example.androidproject {
+    namespace dataclasses {
+      class com.example.androidproject.dataclasses.AddMovementTimerTask {
+          {static} + running : boolean
+          + run()
+      }
+    }
+  }
+  
+
+  namespace com.example.androidproject {
+    namespace dataclasses {
+      class com.example.androidproject.dataclasses.AddTobacco {
+          + AddTobacco()
+          + getTobaccoProduct()
+          + toString()
+      }
+    }
+  }
+  
+
+  namespace com.example.androidproject {
+    namespace dataclasses {
+      class com.example.androidproject.dataclasses.AddVice {
+          - date : String
+          - price : double
+          + AddVice()
+          + getDate()
+          + getPrice()
+          + setPrice()
+      }
+    }
+  }
+  
+
+  namespace com.example.androidproject {
+    namespace dataclasses {
+      class com.example.androidproject.dataclasses.Alcohol {
+          - defaultPrice : double
+          - name : String
+          - size : double
+          - volPercent : double
+          + Alcohol()
+          + getDefaultPrice()
+          + getName()
+          + getSize()
+          + getVolPercent()
+          + toString()
+      }
+    }
+  }
+  
+
+  namespace com.example.androidproject {
+    namespace dataclasses {
+      class com.example.androidproject.dataclasses.AlcoholSingleton {
+          {static} + AlcoholInstance : AlcoholSingleton
+          - drinks : List<Alcohol>
+          + AlcoholSingleton()
+          {static} + getAlcoholInstance()
+          + getDrinks()
+      }
+    }
+  }
+  
+
+  namespace com.example.androidproject {
+    namespace dataclasses {
+      class com.example.androidproject.dataclasses.EventSingleton {
+          - df : DecimalFormat
+          - dfs : DecimalFormatSymbols
+          {static} - eventInstance : EventSingleton
+          - movementEventList : ArrayList<AddMovement>
+          - viceEventList : ArrayList<AddVice>
+          - vices : CharSequence[]
+          + AddMovementEvent()
+          + AddViceEvent()
+          + getAlcoholConsumption()
+          + getDoses()
+          {static} + getEventInstance()
+          + getMovementEvent()
+          + getMovementEventList()
+          + getPrice()
+          + getSpecificViceEvents()
+          + getSpecificViceEvents()
+          + getTobaccoTime()
+          + getViceEventList()
+          + getVices()
+          - EventSingleton()
+      }
+    }
+  }
+  
+
+  namespace com.example.androidproject {
+    namespace dataclasses {
+      class com.example.androidproject.dataclasses.Tobacco {
+          - carbonmonoxide : double
+          - minutesSpent : int
+          - tar : double
+          + Tobacco()
+          + getTimeSpent()
+          + toString()
+      }
+    }
+  }
+  
+
+  namespace com.example.androidproject {
+    namespace dataclasses {
+      class com.example.androidproject.dataclasses.TobaccoListSingleton {
+          - tobaccoList : ArrayList<Tobacco>
+          {static} - tobaccoListInstance : TobaccoListSingleton
+          + getTobaccoList()
+          {static} + getTobaccoListInstance()
+          - TobaccoListSingleton()
+      }
+    }
+  }
+  
+
+  namespace com.example.androidproject {
+    namespace dataclasses {
+      class com.example.androidproject.dataclasses.TobaccoProduct {
+          - name : String
+          - nicotineAmount : double
+          + TobaccoProduct()
+          + getName()
+          + getNicotineAmount()
+      }
+    }
+  }
+  
+
+  namespace com.example.androidproject {
+    namespace dataclasses {
+      class com.example.androidproject.dataclasses.TrackMovement {
+          - accelerometer : Sensor
+          - accelerometerAvailable : boolean
+          - currentData : float[]
+          - dataToStore : double
+          - gyroscope : Sensor
+          - gyroscopeAvailable : boolean
+          - mContext : Context
+          {static} - movementInstance : TrackMovement
+          - sensorManager : SensorManager
+          - timer : Timer
+          - xAcceleration : float
+          - xRotation : float
+          - yAcceleration : float
+          - yRotation : float
+          - zAcceleration : float
+          - zRotation : float
+          + TrackMovement()
+          + TrackMovement()
+          + collectData()
+          + getData()
+          + getDataToStore()
+          {static} + getMovementInstance()
+          + onAccuracyChanged()
+          + onSensorChanged()
+          + setDataToStore()
+          + setListener()
+          + track()
+          + unregisterSensorListeners()
+          - saveData()
+          - startSensors()
+      }
+    }
+  }
+  
+
+  namespace com.example.androidproject {
+    namespace dataclasses {
+      interface com.example.androidproject.dataclasses.TrackMovement.Listener {
+          {abstract} + onEvent()
+      }
+    }
+  }
+  
+
+  namespace com.example.androidproject {
+    namespace dataclasses {
+      class com.example.androidproject.dataclasses.Vice {
+          + Vice()
+      }
+    }
+  }
+  
+
+  com.example.androidproject.dataclasses.AddAlcohol -up-|> com.example.androidproject.dataclasses.AddVice
+  com.example.androidproject.dataclasses.AddAlcohol o-- com.example.androidproject.dataclasses.Alcohol : alcohol
+  com.example.androidproject.dataclasses.AddMovementTimerTask -up-|> java.util.TimerTask
+  com.example.androidproject.dataclasses.AddTobacco -up-|> com.example.androidproject.dataclasses.AddVice
+  com.example.androidproject.dataclasses.AddTobacco o-- com.example.androidproject.dataclasses.TobaccoProduct : tobaccoProduct
+  com.example.androidproject.dataclasses.Alcohol -up-|> com.example.androidproject.dataclasses.Vice
+  com.example.androidproject.dataclasses.Tobacco -up-|> com.example.androidproject.dataclasses.TobaccoProduct
+  com.example.androidproject.dataclasses.TobaccoProduct -up-|> com.example.androidproject.dataclasses.Vice
+  com.example.androidproject.dataclasses.TrackMovement .up.|> android.hardware.SensorEventListener
+  com.example.androidproject.dataclasses.TrackMovement -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.androidproject.dataclasses.TrackMovement o-- com.example.androidproject.dataclasses.TrackMovement.Listener : mListener
+  com.example.androidproject.dataclasses.TrackMovement +-down- com.example.androidproject.dataclasses.TrackMovement.Listener
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

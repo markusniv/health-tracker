@@ -26,7 +26,7 @@ public class TrackMovement extends AppCompatActivity implements SensorEventListe
         return movementInstance;
     }
 
-    Context mContext;
+    private Context mContext;
 
     /**
      * Association to MovementActivity.
@@ -73,7 +73,7 @@ public class TrackMovement extends AppCompatActivity implements SensorEventListe
     private float[] currentData;
     private double dataToStore;
 
-    Timer timer = new Timer();
+    private Timer timer = new Timer();
 
     /**
      * Called from MovementActivity to start sensor service and to start collecting and saving data.

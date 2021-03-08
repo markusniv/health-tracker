@@ -45,7 +45,7 @@ public class MovementActivity extends AppCompatActivity {
     private TextView xAcc, yAcc, zAcc, xRot, yRot, zRot;
 
     //For formatting raw sensor data.
-    DecimalFormat df = new DecimalFormat("#.##");
+    private DecimalFormat df = new DecimalFormat("#.##");
 
     //Array for raw sensor data.
     private float[] dynData;
