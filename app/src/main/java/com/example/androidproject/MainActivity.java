@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String PREFS_NAME = "PreferencesFile";
     public static final String btnType = "ButtonType";
 
-    private TrackMovement movementTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,10 +79,6 @@ public class MainActivity extends AppCompatActivity {
 
         updateUI();
 
-        /*//Create instance of TrackMovement.
-        movementTracker = new TrackMovement();
-        //Start tracking user activity.
-        movementTracker.track();*/
     }
 
     /**
@@ -337,9 +332,5 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-
-        //Unregister sensor listeners.
-        /*movementTracker.unregisterSensorListerers();*/
     }
 }
