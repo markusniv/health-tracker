@@ -16,6 +16,11 @@ import java.util.Locale;
 
 import static com.example.androidproject.activities.MainActivity.PREFS_NAME;
 
+/**
+ * Big singleton class that is used to store all the app data into SharedPreferences. Holds ArrayLists
+ * of all AddVice and AddMovement events and has methods to filter through them depending on their
+ * types and timestamps
+ */
 public class EventSingleton {
     private static final EventSingleton eventInstance = new EventSingleton();
     private ArrayList<AddVice> viceEventList;
@@ -40,10 +45,18 @@ public class EventSingleton {
         return eventInstance;
     }
 
+    /**
+     * Add an AddVice event into the storage ArrayList<AddVice>
+     * @param addVice The event being added
+     */
     public void AddViceEvent(AddVice addVice) {
         viceEventList.add(addVice);
     }
 
+    /**
+     * Add an AddMovement event into the storage ArrayList<AddMovement>
+     * @param addMovement The event being added
+     */
     public void AddMovementEvent(AddMovement addMovement) {
         movementEventList.add(addMovement);
     }
@@ -54,10 +67,6 @@ public class EventSingleton {
 
     public ArrayList<AddMovement> getMovementEventList() {
         return movementEventList;
-    }
-
-    public AddMovement getMovementEvent(int index) {
-        return movementEventList.get(index);
     }
 
     public CharSequence[] getVices() {
