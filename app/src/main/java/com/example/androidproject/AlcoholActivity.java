@@ -21,6 +21,11 @@ import java.util.ArrayList;
 
 import static com.example.androidproject.MainActivity.PREFS_NAME;
 
+/**
+ * Activity in which the user chooses an alcohol type and size that was drunk and enters its price.
+ * From this data, an AddAlcohol-object is created, which is then added into the EventSingleton viceEventList.
+ */
+
 public class AlcoholActivity extends AppCompatActivity {
 
     private Alcohol alcohol;
@@ -49,19 +54,13 @@ public class AlcoholActivity extends AppCompatActivity {
             }
         });
     }
+
     public void onClick(View v)     {
         EditText alcoholPriceField = findViewById(R.id.priceField);
         String alcoholPriceString = alcoholPriceField.getText().toString();
 
         double alcoholPrice = Double.parseDouble(alcoholPriceString);
-        /*
-        double alcoholPrice;
-        if (!alcoholPriceString.equals("")) {
-            alcoholPrice = Double.parseDouble(alcoholPriceString);
-        } else {
-            alcoholPrice =
-        }
-*/
+
         AddAlcohol addAlcoholEvent = new AddAlcohol(alcohol, alcoholPrice);
         EventSingleton.getEventInstance().AddViceEvent(addAlcoholEvent);
 

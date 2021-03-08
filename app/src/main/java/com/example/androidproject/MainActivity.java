@@ -40,6 +40,7 @@ import static android.content.DialogInterface.BUTTON1;
  * MainActivity, also known as the ViceActivity. Allows the user to add and remove vices from their
  * view and shows these vices in a ScrollView.
  */
+
 public class MainActivity extends AppCompatActivity {
     public static final String EXTRA = "com.example.androidproject.EXTRA";
     public static final String PREFS_NAME = "PreferencesFile";
@@ -94,14 +95,14 @@ public class MainActivity extends AppCompatActivity {
 
         // Alcohol buttons
         if (v == findViewById(R.id.btnAddAlcohol)) {
-            Log.d("Note", "Adding alcohol portion");
+            Log.i("Note", "Adding alcohol portion");
 
             Intent alcoholIntent = new Intent(MainActivity.this, AlcoholActivity.class);
             startActivity(alcoholIntent);
 
         }
         if (v == findViewById(R.id.btnDrivingAbility)) {
-            Log.d("Note", "Going to info about alcohol risks");
+            Log.i("Note", "Going to info about alcohol risks");
 
             Intent alcoholRisks = new Intent(MainActivity.this, RisksActivity.class);
             alcoholRisks.putExtra(btnType,"Alcohol");
@@ -115,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (v == findViewById(R.id.btnTobaccoCounter)) {
-            Log.d("Note", "Going to info about tobacco risks");
+            Log.i("Note", "Going to info about tobacco risks");
 
             Intent tobaccoRisks = new Intent(MainActivity.this, RisksActivity.class);
             tobaccoRisks.putExtra(btnType, "Tobacco");

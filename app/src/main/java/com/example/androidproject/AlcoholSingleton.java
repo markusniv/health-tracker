@@ -11,6 +11,7 @@ public class AlcoholSingleton {
     public static final AlcoholSingleton AlcoholInstance = new AlcoholSingleton();
     private List<Alcohol> drinks;
 
+
     public AlcoholSingleton() {
         drinks = new ArrayList<Alcohol>();
         drinks.add(new Alcohol("Olut 0,5l", 0.5, 4.5, 6));

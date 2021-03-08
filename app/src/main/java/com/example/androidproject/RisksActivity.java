@@ -8,6 +8,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+/**
+ * Activity that shows user information about the risks and harm of vices in ScrollView.
+ * Text depends on which button was clicked in previous activity
+ */
+
 public class RisksActivity extends AppCompatActivity {
 
 
@@ -31,21 +36,23 @@ public class RisksActivity extends AppCompatActivity {
 
     }
 
+    // Buttons to return to main or statistics activities
     public void buttonsClicked(View v) {
         if (v == findViewById(R.id.btnBack)) {
-            Log.d("Note", "Back to main");
+            Log.i("Note", "Back to main");
 
             Intent backToMain = new Intent(RisksActivity.this, MainActivity.class);
             startActivity(backToMain);
 
         }
         if (v == findViewById(R.id.btnToStats)) {
-            Log.d("Note", "Going to statistics");
+            Log.i("Note", "Going to statistics");
 
             Intent goToStats = new Intent(RisksActivity.this, StatisticsActivity.class);
             startActivity(goToStats);
         }
     }
+    // Get all texts with risk information
     public String getRisks(int textId)  {
         if (textId == 1){
             return "Ongelmakäytöstä puhutaan, kun riskikäytön rajat ylittyvät. Ongelmakäyttäjällä ei välttämättä ole vielä haittoja, mutta niiden ilmaantumiseen on suuri todennäköisyys. Siitä syystä näiden rajojen ylittyminen ilman haittojakin edellyttää ehdottomasti juomisen vähentämistä. Jos tämä ei omin voimin, läheisten tai vertaistuen avulla onnistu on syytä hakeutua hoitoon.  Suomessa korken riskin taso terveelle, keskikokoiselle miehelle on 23-24 alkoholiannosta viikossa tai noin kolme annosta säännöllisesti päivittäin juotuna. Vastaavat luvut naisille ovat 12-16 viikossa tai 2 annosta säännöllisesti päivittäin. Kohtalaisen riskin taso miehillä on 14 annosta ja naisilla 7 annosta viikossa." + "\n" + "Suomessa yksi alkoholiannos vastaa 33 cl keskiolutta, 12 cl mietoa viiniä tai 4 cl väkeviä. Riskikäyttö on kyseessä silloin, jos nämä rajat ylittyvät säännöllisesti.";
