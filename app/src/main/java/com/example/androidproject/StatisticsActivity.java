@@ -37,12 +37,14 @@ import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
 import static com.example.androidproject.MainActivity.PREFS_NAME;
 
@@ -149,8 +151,7 @@ public class StatisticsActivity extends AppCompatActivity {
         int amount = 0;
 
         LocalDateTime eventDateTime;
-        LocalDate localTimeNow = LocalDate.now();
-        LocalDate eventTime;
+        WeekFields weekFields = WeekFields.of(Locale.getDefault());
 
         // Checking all the events from viceArrayList that correspond with the filtered timeframe
         switch(timeframe) {
@@ -160,7 +161,9 @@ public class StatisticsActivity extends AppCompatActivity {
                     int viceCount = 0;
                     for (AddVice addVice : viceArrayList) {
                         eventDateTime = LocalDateTime.parse(addVice.getDate());
-                        if (eventDateTime.getMonth() == LocalDateTime.now().getMonth() && eventDateTime.getDayOfWeek().getValue() == i) {
+                        int eventWeekNumber = eventDateTime.get(weekFields.ISO.weekOfMonth());
+                        int currentWeekNumber = LocalDateTime.now().get(weekFields.ISO.weekOfMonth());
+                        if (eventDateTime.getMonth() == LocalDateTime.now().getMonth() && eventWeekNumber == currentWeekNumber && eventDateTime.getDayOfWeek().getValue() == i) {
                             viceCount++;
                         }
                     }
